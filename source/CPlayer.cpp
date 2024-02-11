@@ -1,15 +1,23 @@
-#include "../headers/CPlayer.h"
+#include "CPlayer.h"
 #include <iostream>
 
-using namespace std;
-
-int main()
+CPlayer::CPlayer(std::string name, int age)
 {
-    CPlayer *player = new CPlayer("John");
+    mName = name;
+    mAge = age;
+}
 
-    player = new CPlayer("Jane");
+CPlayer::~CPlayer()
+{
+    std::cout << "Destroying player: " << mName << std::endl;
+}
 
-    cout << "Player name: " << player->getName() << endl;
+int CPlayer::getAge()
+{
+    return mAge;
+}
 
-    return 0;
+std::string CPlayer::getName()
+{
+    return mName;
 }

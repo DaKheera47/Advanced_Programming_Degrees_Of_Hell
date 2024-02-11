@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Iheaders -Wall
+CXXFLAGS = -Iheaders -Wall -std=c++14
 
 # Source directory
 SRC_DIR = source
@@ -27,7 +27,7 @@ all: $(TARGET)
 
 # Link object files to create the executable
 $(TARGET): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
 
 # Compile cpp files to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
