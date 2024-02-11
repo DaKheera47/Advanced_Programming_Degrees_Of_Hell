@@ -1,0 +1,36 @@
+2 Welcome Week
+1 Programming Task 60 10 1
+5 Bogus
+1 C++ Exam 80 30 2
+3 PASS Leader 100
+1 Database Design 120 20 1
+4 Bonus
+1 Literature Review 300 30 3
+7 Accused of Plagiarism
+1 Networking Test 100 10 1
+5 Bogus
+1 Team Project 160 20 2
+4 Bonus
+1 Boring Essay 200 10 1
+8 Skip Classes
+1 Assessed Dialog 180 10 1
+7 Accused of Plagiarism
+1 App Presentation 80 20 1
+8 Skip Classes
+1 Maths Quiz 100 30 3
+3 Computing Society 100
+1 Mock Interview 240 10 2
+3 Quidditch Captain 100
+1 AI Assignment 260 30 3
+5 Bogus
+1 Security Exam 280 20 2
+4 Bonus
+1 Web Assignment 260 45 2
+4 Bonus
+1 Project Demo 300 50 3
+5 Bogus
+1 Design Documents 320 40 3
+6 Plagiarism Hearing
+1 Project Report 400 50 3
+8 Skip Classes
+1 Annoying Simulation 220 30 2
