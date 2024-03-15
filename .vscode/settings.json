@@ -53,6 +53,9 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "execution": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp"
     }
 }
