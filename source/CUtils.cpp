@@ -1,5 +1,6 @@
 #include "CUtils.h"
 
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -68,4 +69,23 @@ void CUtils::replace(std::string& str, const std::string& from, const std::strin
         str.replace(start_pos, from.length(), to);
         start_pos += to.length();  // In case 'to' contains 'from', like replacing 'x' with 'yx'
     }
+}
+
+int CUtils::randInt(int end)
+{
+    // just call the randInt with 2 params
+    return CUtils::randInt(0, end);
+}
+
+int CUtils::randInt(int start, int end)
+{
+    // Ensure end is greater than start
+    if (end < start)
+    {
+        // https://en.cppreference.com/w/cpp/algorithm/swap
+        swap(start, end);
+    }
+
+    int range = end - start + 1;
+    return rand() % range + start;
 }
