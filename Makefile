@@ -23,7 +23,7 @@ SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # Default make target
-all: $(TARGET)
+all: $(TARGET) copy_static
 
 # Link object files to create the executable
 $(TARGET): $(OBJECTS)
@@ -34,9 +34,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Custom target to copy the static folder
+copy_static:
+	@mkdir -p $(DIST_DIR)/static
+	@cp -r ./static/ $(DIST_DIR)/static/
+	@echo "Static content copied."
+
 # Clean target for removing compiled files
 clean:
-	@rm -rf $(OBJ_DIR) $(TARGET)
+	@rm -rf $(OBJ_DIR) $(TARGET) $(DIST_DIR)/static
 	@echo "Project cleaned."
 
-.PHONY: all clean
+.PHONY: all clean copy_static

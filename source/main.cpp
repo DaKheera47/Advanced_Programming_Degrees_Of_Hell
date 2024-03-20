@@ -10,7 +10,10 @@ using namespace std;
 int main()
 {
     // seeding the random number generator
-    srand(static_cast<unsigned int>(time(0)));
+    // get the seed from seed.txt
+    string firstLine = CUtils::readFileLines("./static/seed.txt")[0];
+    int seed = CUtils::strToInt(firstLine);
+    srand(seed);
 
     CPlayerVector players;
     players.push_back(make_unique<CPlayer>("Vyvyan"));
