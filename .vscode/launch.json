@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DegreesOfHell",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/dist/DegreesOfHell",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "preLaunchTask": "Clean and Build DegreesOfHell"
+        }
+    ]
+}

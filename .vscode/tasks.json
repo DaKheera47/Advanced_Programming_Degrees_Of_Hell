@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build DegreesOfHell",
+            "type": "shell",
+            "command": "make",
+            "args": ["-C", "${workspaceFolder}", "all"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc",
+            "detail": "Compiles the DegreesOfHell project using the Makefile."
+        },
+        {
+            "label": "Clean project",
+            "type": "shell",
+            "command": "make",
+            "args": ["-C", "${workspaceFolder}", "clean"],
+            "problemMatcher": [],
+            "detail": "Cleans the build directory."
+        },
+        {
+            "label": "Clean and Build DegreesOfHell",
+            "type": "shell",
+            "command": "make",
+            "args": ["-C", "${workspaceFolder}", "clean", "all"],
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "detail": "Cleans and then compiles the DegreesOfHell project using the Makefile."
+        }
+    ]
+}
