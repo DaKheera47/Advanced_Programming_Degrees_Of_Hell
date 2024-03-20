@@ -89,3 +89,19 @@ int CUtils::randInt(int start, int end)
     int range = end - start + 1;
     return rand() % range + start;
 }
+
+int CUtils::strToInt(const std::string& str)
+{
+    try
+    {
+        return std::stoi(str);
+    }
+    catch (const std::invalid_argument& e)
+    {
+        throw std::runtime_error("Conversion error: invalid argument");
+    }
+    catch (const std::out_of_range& e)
+    {
+        throw std::runtime_error("Conversion error: out of range");
+    }
+}
