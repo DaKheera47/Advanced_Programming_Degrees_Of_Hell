@@ -1,4 +1,5 @@
 #include "CPlayer.h"
+
 #include <iostream>
 
 CPlayer::CPlayer(std::string name, int levelOfMotivation, int success, int yearOfStudy)
@@ -7,6 +8,11 @@ CPlayer::CPlayer(std::string name, int levelOfMotivation, int success, int yearO
     mLevelOfMotivation = levelOfMotivation;
     mSuccess = success;
     mYearOfStudy = yearOfStudy;
+}
+
+CPlayer::CPlayer(std::string name)
+{
+    mName = name;
 }
 
 CPlayer::~CPlayer()
@@ -20,8 +26,9 @@ std::string CPlayer::getName()
 }
 
 // cout operator overload
-std::ostream &operator<<(std::ostream &os, const CPlayer &player)
+std::ostream& operator<<(std::ostream& os, const CPlayer& player)
 {
-    os << "Player: " << player.mName << " Motivation: " << player.mLevelOfMotivation << " Success: " << player.mSuccess << " Year: " << player.mYearOfStudy;
+    os << "Player: " << player.mName << " Motivation: " << player.mLevelOfMotivation
+       << " Success: " << player.mSuccess << " Year: " << player.mYearOfStudy;
     return os;
 }
