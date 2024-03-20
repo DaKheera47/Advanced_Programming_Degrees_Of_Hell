@@ -4,32 +4,38 @@
 #include <memory>
 #include <string>
 
-#include "CPlayer.h"  // Make sure this file exists and defines CPlayer
+// #include "CPlayer.h"
 
 class CSpace
 {
 protected:
     int type;
-    std::string name;
-    int motivationalCost;
-    int achievement;
-    int yearOfStudy;
+    std::string mName;
+    int mMotivationalCost;
+    int mSucess;
+    int mYear;
 
 public:
     CSpace(const std::string& nameValue, int typeValue, int motivationalCostValue,
            int achievementValue, int yearOfStudyValue)
     {
-        name = nameValue;
+        mName = nameValue;
         type = typeValue;
-        motivationalCost = motivationalCostValue;
-        achievement = achievementValue;
-        yearOfStudy = yearOfStudyValue;
+        mMotivationalCost = motivationalCostValue;
+        mSucess = achievementValue;
+        mYear = yearOfStudyValue;
     }
 
-    virtual ~CSpace() {}  // Virtual destructor for safe polymorphic use
+    ~CSpace() {}  // destructor for safe polymorphic use
 
     // Pure virtual function making CSpace abstract
-    virtual void handlePlayerInteraction(std::unique_ptr<CPlayer>& player) = 0;
 
-    virtual std::string getName() { return name; };
+    std::string getName()
+    {
+        std::cout << mName << std::endl;
+        return mName;
+    };
 };
+
+using UniqSpaceVector = std::vector<std::unique_ptr<CSpace>>;
+using UniqSpace = std::unique_ptr<CSpace>;

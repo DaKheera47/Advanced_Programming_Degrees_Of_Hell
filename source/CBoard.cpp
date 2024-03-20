@@ -65,14 +65,15 @@ CBoard::CBoard(string filename)
             spaceMotivation = spaceDetails.at(0);
             spaceSuccess = spaceDetails.at(1);
             spaceYear = spaceDetails.at(2);
+
+            mSpaces.push_back(
+                make_shared<CSpace>(spaceName, spaceType, CUtils::strToInt(spaceMotivation),
+                                    CUtils::strToInt(spaceSuccess), CUtils::strToInt(spaceYear)));
         }
         catch (const std::out_of_range& e)
         {
-            // std::cerr << "Error: Attempted to access an out-of-range element in
-            // 'spaceDetails'.\n";
+            // a space may or may not have exxtra details
         }
-
-        // cout << "LINE: " << line << endl;
 
         cout << "space type: " << spaceType << ", space name: " << spaceName
              << ", Motivation: " << spaceMotivation << ", Success: " << spaceSuccess
@@ -81,3 +82,8 @@ CBoard::CBoard(string filename)
 }
 
 CBoard::~CBoard() {}
+
+std::vector<std::shared_ptr<CSpace>> CBoard::getSpaces()
+{
+    return mSpaces;
+}

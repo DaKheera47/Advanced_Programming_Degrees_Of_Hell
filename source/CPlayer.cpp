@@ -25,6 +25,16 @@ std::string CPlayer::getName()
     return mName;
 }
 
+void CPlayer::setCurrentSpace(std::shared_ptr<CSpace> space)
+{
+    mCurrentSpace = space;
+}
+
+std::shared_ptr<CSpace> CPlayer::getCurrentSpace()
+{
+    return mCurrentSpace;
+}
+
 // cout operator overload
 std::ostream& operator<<(std::ostream& os, const CPlayer& player)
 {
