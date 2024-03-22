@@ -5,7 +5,7 @@
 
 using namespace std;
 
-CGame::CGame(vector<shared_ptr<CPlayer>>& players, unique_ptr<CBoard>& board)
+CGame::CGame(CPlayerVector& players, unique_ptr<CBoard>& board)
 {
     mPlayers = players;
     mBoard = std::move(board);
@@ -30,11 +30,11 @@ void CGame::start()
              << player->getCurrentSpace()->getName() << endl;
     }
 
-    // Print details of each space
-    for (const auto& space : mBoard->getSpaces())
-    {
-        cout << "Space name: " << space->getName() << endl;
-    }
+    // // Print details of each space
+    // for (const auto& space : mBoard->getSpaces())
+    // {
+    //     cout << "Space name: " << space->getName() << endl;
+    // }
 }
 
 // CGame::CGame(CPlayerVector& players, UniqSpaceVector& spaces, unique_ptr<CBoard>& board) {}
