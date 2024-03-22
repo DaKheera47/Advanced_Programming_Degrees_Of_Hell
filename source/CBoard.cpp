@@ -63,21 +63,21 @@ CBoard::CBoard(string filename)
 
         // if at this point line isn't empty, it means this space has a motivation, success and year
         vector<string> spaceDetails = CUtils::split(line, ' ');
+
+        std::shared_ptr<CSpace> space =
+            spaceFactory->CreateNewSpace(ESpaceType(CUtils::charToInt(spaceType)));
+
+        space->setName(spaceName);
+
         try
         {
             spaceMotivation = spaceDetails.at(0);
             spaceSuccess = spaceDetails.at(1);
             spaceYear = spaceDetails.at(2);
 
-            std::shared_ptr<CSpace> space =
-                spaceFactory->CreateNewSpace(ESpaceType(CUtils::charToInt(spaceType)));
-
-            space->setName(spaceName);
             space->setMotivationalCost(CUtils::strToInt(spaceMotivation));
             space->setSuccess(CUtils::strToInt(spaceSuccess));
             space->setYear(CUtils::strToInt(spaceYear));
-
-            mSpaces.push_back(space);
 
             // mSpaces.push_back(
             //     make_shared<CSpace>(spaceName, spaceType, CUtils::strToInt(spaceMotivation),
@@ -89,7 +89,10 @@ CBoard::CBoard(string filename)
             // if it's a space without the extra details
             // mSpaces.push_back(make_shared<CSpace>(spaceName, spaceType));
             // a space may or may not have exxtra details
+            cout << "Skill Issue: " << e.what() << endl;
         }
+
+        mSpaces.push_back(space);
     }
 
     for (const auto& space : mSpaces)
