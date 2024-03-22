@@ -4,11 +4,14 @@
 #include <iostream>
 #include <sstream>
 
+#include "../headers/factory/FSpace.h"
 #include "CUtils.h"
 using namespace std;
 
 CBoard::CBoard(string filename)
 {
+    unique_ptr<FSpace> spaceFactory = make_unique<FSpace>();
+
     ifstream file(filename);
     vector<string> lines;
     string line;
@@ -66,18 +69,35 @@ CBoard::CBoard(string filename)
             spaceSuccess = spaceDetails.at(1);
             spaceYear = spaceDetails.at(2);
 
-            mSpaces.push_back(
-                make_shared<CSpace>(spaceName, spaceType, CUtils::strToInt(spaceMotivation),
-                                    CUtils::strToInt(spaceSuccess), CUtils::strToInt(spaceYear)));
+            std::shared_ptr<CSpace> space =
+                spaceFactory->CreateNewSpace(ESpaceType(CUtils::charToInt(spaceType)));
+
+            space->setName(spaceName);
+            space->setMotivationalCost(CUtils::strToInt(spaceMotivation));
+            space->setSuccess(CUtils::strToInt(spaceSuccess));
+            space->setYear(CUtils::strToInt(spaceYear));
+
+            mSpaces.push_back(space);
+
+            // mSpaces.push_back(
+            //     make_shared<CSpace>(spaceName, spaceType, CUtils::strToInt(spaceMotivation),
+            //                         CUtils::strToInt(spaceSuccess),
+            //                         CUtils::strToInt(spaceYear)));
         }
         catch (const std::out_of_range& e)
         {
+            // if it's a space without the extra details
+            // mSpaces.push_back(make_shared<CSpace>(spaceName, spaceType));
             // a space may or may not have exxtra details
         }
+    }
 
-        cout << "space type: " << spaceType << ", space name: " << spaceName
-             << ", Motivation: " << spaceMotivation << ", Success: " << spaceSuccess
-             << ", Year: " << spaceYear << endl;
+    for (const auto& space : mSpaces)
+    {
+        cout << "space type: " << static_cast<int>(space->getType())
+             << ", space name: " << space->getName()
+             << ", Motivation: " << space->getMotivationalCost()
+             << ", Success: " << space->getSuccess() << ", Year: " << space->getYear() << endl;
     }
 }
 

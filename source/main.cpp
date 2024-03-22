@@ -2,6 +2,7 @@
 #include <memory>
 using namespace std;
 
+#include "../headers/factory/FSpace.h"
 #include "CBoard.h"
 #include "CGame.h"
 #include "CPlayer.h"
@@ -26,24 +27,24 @@ int main()
 
     // std::shared_ptr<CSpace>& initialSpace = spaces[0];
 
-    vector<shared_ptr<CPlayer>> players;
-    players.push_back(make_shared<CPlayer>("Vyvyan"));
-    players.push_back(make_shared<CPlayer>("Rick"));
+    // vector<shared_ptr<CPlayer>> players;
+    // players.push_back(make_shared<CPlayer>("Vyvyan"));
+    // players.push_back(make_shared<CPlayer>("Rick"));
 
-    // Add players and spaces to the game
-    cout << "Adding players and spaces to the game" << endl;
+    // // Add players and spaces to the game
+    // cout << "Adding players and spaces to the game" << endl;
 
-    for (const auto& player : players)
-    {
-        cout << *player << endl;
-    }
+    // for (const auto& player : players)
+    // {
+    //     cout << *player << endl;
+    // }
 
-    // create the board
+    // // create the board
     unique_ptr<CBoard> board = make_unique<CBoard>("./static/degrees.txt");
 
-    unique_ptr<CGame> currentGame = make_unique<CGame>(players, board);
-    // Start the currentGame
-    currentGame->start();
+    // unique_ptr<CGame> currentGame = make_unique<CGame>(players, board);
+    // // Start the currentGame
+    // currentGame->start();
 
     return 0;
 }

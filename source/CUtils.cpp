@@ -105,3 +105,8 @@ int CUtils::strToInt(const std::string& str)
         throw std::runtime_error("Conversion error: out of range");
     }
 }
+
+int CUtils::charToInt(const char& c)
+{
+    return c - '0';
+}

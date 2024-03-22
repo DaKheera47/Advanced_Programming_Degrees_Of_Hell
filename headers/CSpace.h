@@ -5,36 +5,51 @@
 #include <string>
 
 // #include "CPlayer.h"
+#include "./enums/ESpaceType.h"
 
 class CSpace
 {
 protected:
-    int type;
+    ESpaceType mType;
     std::string mName;
     int mMotivationalCost;
-    int mSucess;
+    int mSuccess;
     int mYear;
 
 public:
-    CSpace(const std::string& nameValue, int typeValue, int motivationalCostValue,
+    CSpace(){};
+    CSpace(ESpaceType type) { mType = type; };
+    CSpace(const std::string& nameValue, ESpaceType typeValue, int motivationalCostValue,
            int achievementValue, int yearOfStudyValue)
     {
         mName = nameValue;
-        type = typeValue;
+        mType = typeValue;
         mMotivationalCost = motivationalCostValue;
-        mSucess = achievementValue;
+        mSuccess = achievementValue;
         mYear = yearOfStudyValue;
     }
 
-    ~CSpace() {}  // destructor for safe polymorphic use
+    virtual ~CSpace() {}  // Virtual destructor for safe polymorphic use
 
     // Pure virtual function making CSpace abstract
+    // virtual void handlePlayerInteraction(std::unique_ptr<CPlayer>& player) = 0;
 
-    std::string getName()
+    // Virtual getters
+    virtual ESpaceType getType() const { return mType; }
+    virtual const std::string& getName() const { return mName; }
+    virtual int getMotivationalCost() const { return mMotivationalCost; }
+    virtual int getSuccess() const { return mSuccess; }
+    virtual int getYear() const { return mYear; }
+
+    // Virtual setters
+    virtual void setType(ESpaceType newType) { mType = newType; }
+    virtual void setName(const std::string& newName) { mName = newName; }
+    virtual void setMotivationalCost(int newMotivationalCost)
     {
-        std::cout << mName << std::endl;
-        return mName;
-    };
+        mMotivationalCost = newMotivationalCost;
+    }
+    virtual void setSuccess(int newSuccess) { mSuccess = newSuccess; }
+    virtual void setYear(int newYear) { mYear = newYear; }
 };
 
 using UniqSpaceVector = std::vector<std::unique_ptr<CSpace>>;

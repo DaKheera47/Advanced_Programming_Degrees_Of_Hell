@@ -7,16 +7,14 @@ using namespace std;
 
 CGame::CGame(vector<shared_ptr<CPlayer>>& players, unique_ptr<CBoard>& board)
 {
-    // Optionally clear current players and spaces
     mPlayers = players;
     mBoard = std::move(board);
 
-    // set intial positions for all players
+    // set intial positions for all players to the 0th element on the board, so the first space
     for (const auto& player : players)
     {
         player->setCurrentSpace(mBoard->getSpaces()[0]);
     }
-    // Initialize or reset the game
 }
 
 // Start game
