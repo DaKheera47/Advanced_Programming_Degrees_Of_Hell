@@ -16,11 +16,12 @@ DIST_DIR = dist
 # Target executable name
 TARGET = $(DIST_DIR)/DegreesOfHell
 
-# Find all cpp files in the source directory
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+# Find all cpp files in the source directory and subdirectories
+SOURCES = $(shell find $(SRC_DIR) -name '*.cpp')
 
 # Replace source directory with object directory and change file extension to .o
-OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+# Also preserve subdirectory structure in object files
+OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 # Default make target
 all: $(TARGET) copy_static
@@ -31,7 +32,7 @@ $(TARGET): $(OBJECTS)
 
 # Compile cpp files to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Custom target to copy the static folder
