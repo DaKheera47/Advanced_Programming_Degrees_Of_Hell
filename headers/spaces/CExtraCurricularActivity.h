@@ -6,9 +6,9 @@
 
 #include "../CSpace.h"
 
-class CAssessment : public CSpace
+class CExtraCurricularActivity : public CSpace
 {
 protected:
 public:
-    CAssessment(ESpaceType type) : CSpace(type){};
+    CExtraCurricularActivity(ESpaceType type) : CSpace(type){};
 };
