@@ -60,6 +60,9 @@ void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
             {
                 std::cout << "\t..." << helper->getName() << " helps and achieves " << finalSuccess
                           << std::endl;
+
+                // update helper's success
+                helper->setSuccess(helper->getSuccess() + finalSuccess);
             }
         }
     }

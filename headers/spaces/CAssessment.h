@@ -10,7 +10,7 @@
 
 class CAssessment : public CSpace
 {
-private:
+protected:
     // needs to know who has completed the assessment
     CPlayerVector mCompletedBy;
 
