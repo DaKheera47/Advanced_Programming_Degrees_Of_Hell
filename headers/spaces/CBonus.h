@@ -12,5 +12,5 @@ class CBonus : public CSpace
 protected:
 public:
     CBonus(ESpaceType type) : CSpace(type){};
-    void playerLanded(std::shared_ptr<CPlayer>& player) override;
+    void playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override;
 };

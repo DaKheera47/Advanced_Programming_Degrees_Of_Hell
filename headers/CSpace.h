@@ -8,6 +8,7 @@
 #include "./enums/ESpaceType.h"
 
 class CPlayer;
+class CBoard;
 
 class CSpace
 {
@@ -34,7 +35,7 @@ public:
     virtual ~CSpace() {}  // Virtual destructor for safe polymorphic use
 
     // Pure virtual function making CSpace abstract
-    virtual void playerLanded(std::shared_ptr<CPlayer>& player) = 0;
+    virtual void playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) = 0;
 
     // Virtual getters
     virtual ESpaceType getType() const { return mType; }

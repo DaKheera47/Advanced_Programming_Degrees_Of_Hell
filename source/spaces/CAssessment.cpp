@@ -5,7 +5,7 @@
 #include "../../headers/CDebugUtils.h"
 #include "../../headers/CUtils.h"
 
-void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player)
+void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
 {
     // debug print contents of mCompletedBy
     DEBUG_PRINT("Player " << player->getName() << " has completed the " << mName << " assessment."

@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "CSpace.h"
+
 class CUtils
 {
 private:
@@ -24,4 +26,8 @@ public:
     // https://stackoverflow.com/a/571405
     template <typename T>
     static bool presentInVector(const std::vector<T>& vec, const T& item);
+
+    // get index of space in board
+    static int getSpaceIndex(const std::vector<std::shared_ptr<CSpace>>& spaces,
+                             std::shared_ptr<CSpace>& currentSpace);
 };
