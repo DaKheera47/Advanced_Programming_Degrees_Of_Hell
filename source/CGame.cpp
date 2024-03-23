@@ -22,22 +22,7 @@ CGame::CGame(CPlayerVector& players, unique_ptr<CBoard>& board)
 // Start game
 void CGame::start()
 {
-    // // Print number of players and spaces
-    // cout << "Number of players: " << mPlayers.size() << endl;
-
-    // // Print details of each player
-    // for (const auto& player : mPlayers)
-    // {
-    //     cout << "Player name: " << player->getName() << " is currently at "
-    //          << player->getCurrentSpace()->getName() << endl;
-    // }
-
-    // // // Print details of each space
-    // // for (const auto& space : mBoard->getSpaces())
-    // // {
-    // //     cout << "Space name: " << space->getName() << endl;
-    // // }
-
+    // intro message
     cout << "Welcome to Scumbag College" << endl;
 }
 
