@@ -57,7 +57,8 @@
         "execution": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "__availability": "cpp"
+        "__availability": "cpp",
+        "random": "cpp"
     },
     "cmake.configureOnOpen": true
 }

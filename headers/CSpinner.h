@@ -5,5 +5,5 @@
 class CSpinner
 {
 public:
-    int spin();
+    static int spin();
 };

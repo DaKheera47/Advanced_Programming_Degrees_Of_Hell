@@ -26,7 +26,7 @@ void CGame::start()
     cout << "Welcome to Scumbag College" << endl;
 }
 
-void CGame::play(const int& rounds)
+void CGame::play(const int rounds)
 {
     for (int roundNum = 1; roundNum <= rounds; roundNum++)
     {
@@ -36,7 +36,7 @@ void CGame::play(const int& rounds)
         for (auto& player : mPlayers)
         {
             // spin the spinner
-            int spinResult = spinner.spin();
+            int spinResult = CSpinner::spin();
 
             cout << player->getName() << " spins " << spinResult << endl;
 

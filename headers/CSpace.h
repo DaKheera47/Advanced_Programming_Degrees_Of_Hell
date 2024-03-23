@@ -7,6 +7,7 @@
 // #include "CPlayer.h"
 #include "./enums/ESpaceType.h"
 
+// Forward declarations to avoid circular dependencies
 class CPlayer;
 class CBoard;
 
