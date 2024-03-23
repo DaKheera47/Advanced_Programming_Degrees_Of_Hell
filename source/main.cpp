@@ -33,10 +33,11 @@ int main()
     unique_ptr<CBoard> board = make_unique<CBoard>("./static/degrees.txt");
 
     unique_ptr<CGame> currentGame = make_unique<CGame>(players, board);
+
     // Start the currentGame
     currentGame->start();
 
-    currentGame->play(TOTAL_ROUNDS);
+    currentGame->play(Constants::TOTAL_ROUNDS);
 
     return 0;
 }
