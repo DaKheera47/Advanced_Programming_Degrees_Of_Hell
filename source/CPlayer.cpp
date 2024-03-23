@@ -10,6 +10,17 @@ CPlayer::CPlayer(std::string name, int levelOfMotivation, int success, int yearO
     mYearOfStudy = yearOfStudy;
 }
 
+void CPlayer::setMotivation(int levelOfMotivation)
+{
+    mLevelOfMotivation = levelOfMotivation;
+
+    // make sure motivation doesn't go below 0
+    if (mLevelOfMotivation < 0)
+    {
+        mLevelOfMotivation = 0;
+    }
+}
+
 CPlayer::CPlayer(std::string name)
 {
     mName = name;

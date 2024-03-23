@@ -24,8 +24,8 @@ public:
 
     // setters
     void setCurrentSpace(std::shared_ptr<CSpace> space);
+    void setMotivation(int levelOfMotivation);
     void setName(const std::string& name) { mName = name; }
-    void setMotivation(int levelOfMotivation) { mLevelOfMotivation = levelOfMotivation; }
     void setSuccess(int success) { mSuccess = success; }
     void setYearOfStudy(int yearOfStudy) { mYearOfStudy = yearOfStudy; }
 
