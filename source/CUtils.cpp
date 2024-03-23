@@ -131,3 +131,18 @@ bool CUtils::presentInVector(const std::vector<T>& vec, const T& item)
 // https://stackoverflow.com/questions/2351148/explicit-template-instantiation-when-is-it-used
 template bool CUtils::presentInVector<std::shared_ptr<CPlayer>>(
     const std::vector<std::shared_ptr<CPlayer>>&, const std::shared_ptr<CPlayer>&);
+
+int CUtils::getSpaceIndex(const std::vector<std::shared_ptr<CSpace>>& spaces,
+                          shared_ptr<CSpace>& currentSpace)
+{
+    auto it = std::find_if(spaces.begin(), spaces.end(),
+                           [currentSpace](const std::shared_ptr<CSpace>& spacePtr)
+                           { return spacePtr == currentSpace; });
+
+    if (it != spaces.end())
+    {
+        return std::distance(spaces.begin(), it);
+    }
+
+    return -1;  // Indicates not found
+}

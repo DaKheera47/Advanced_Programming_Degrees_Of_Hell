@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory>
 
+#include "CUtils.h"
+
 using namespace std;
 
 CGame::CGame(CPlayerVector& players, unique_ptr<CBoard>& board)
@@ -56,10 +58,16 @@ void CGame::play()
             cout << player->getName() << " spins " << spinResult << endl;
 
             // move the player
-            player->setCurrentSpace(mBoard->getSpaces()[spinResult]);
+            shared_ptr<CSpace> currentSpace = player->getCurrentSpace();
+            int currentPosIndex = CUtils::getSpaceIndex(mBoard->getSpaces(), currentSpace);
+            int boardSize = mBoard->getSpaces().size();
+            int newPosIndex = (currentPosIndex + spinResult) % boardSize;
+
+            // Move the player to the new position
+            player->setCurrentSpace(mBoard->getSpaces()[newPosIndex]);
 
             // get the player's current space to calculate the effect
-            player->getCurrentSpace()->playerLanded(player);
+            player->getCurrentSpace()->playerLanded(player, mBoard);
 
             // print out the player's new success and motivation:
             std::cout << player->getName() << "'s motivation is " << player->getMotivation()
