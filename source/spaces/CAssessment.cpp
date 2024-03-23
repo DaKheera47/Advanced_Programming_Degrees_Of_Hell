@@ -64,10 +64,6 @@ void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player)
         }
     }
 
-    // print out the player's new success and motivation:
-    std::cout << player->getName() << "'s motivation is " << player->getMotivation()
-              << " and success is " << player->getSuccess() << std::endl;
-
     // add the player to mCompletedBy
     mCompletedBy.push_back(player);
 }

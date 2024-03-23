@@ -58,16 +58,12 @@ void CGame::play()
             // move the player
             player->setCurrentSpace(mBoard->getSpaces()[spinResult]);
 
-            if (player->getCurrentSpace()->getType() == ESpaceType::ASSESSMENT)
-            {
-                // get the player's current space to calculate the effect
-                player->getCurrentSpace()->playerLanded(player);
-            }
+            // get the player's current space to calculate the effect
+            player->getCurrentSpace()->playerLanded(player);
 
-            cout << player->getName() << " lands on " << player->getCurrentSpace()->getName()
-                 << endl;
+            // print out the player's new success and motivation:
+            std::cout << player->getName() << "'s motivation is " << player->getMotivation()
+                      << " and success is " << player->getSuccess() << std::endl;
         }
     }
 }
-
-// CGame::CGame(CPlayerVector& players, UniqSpaceVector& spaces, unique_ptr<CBoard>& board) {}
