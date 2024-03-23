@@ -22,8 +22,17 @@ public:
     // cout operator overload
     friend std::ostream& operator<<(std::ostream& os, const CPlayer& player);
 
-    std::string getName();
-    std::shared_ptr<CSpace> getCurrentSpace();
-
+    // setters
     void setCurrentSpace(std::shared_ptr<CSpace> space);
+    void setName(const std::string& name) { mName = name; }
+    void setMotivation(int levelOfMotivation) { mLevelOfMotivation = levelOfMotivation; }
+    void setSuccess(int success) { mSuccess = success; }
+    void setYearOfStudy(int yearOfStudy) { mYearOfStudy = yearOfStudy; }
+
+    // getters
+    std::shared_ptr<CSpace> getCurrentSpace();
+    std::string getName() const { return mName; }
+    int getMotivation() const { return mLevelOfMotivation; }
+    int getSuccess() const { return mSuccess; }
+    int getYearOfStudy() const { return mYearOfStudy; }
 };

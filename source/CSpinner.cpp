@@ -4,5 +4,6 @@
 
 int CSpinner::spin()
 {
-    return CUtils::randInt(10);
+    int result = CUtils::randInt(10);
+    return result;
 }

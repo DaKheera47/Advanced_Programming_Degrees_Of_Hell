@@ -16,15 +16,12 @@ int main()
     // get the seed from seed.txt
     string firstLine = CUtils::readFileLines("./static/seed.txt")[0];
     int seed = CUtils::strToInt(firstLine);
+    DEBUG_PRINT("Seed: " << seed);
     srand(seed);
 
     CPlayerVector players;
     players.push_back(make_shared<CPlayer>("Vyvyan"));
     players.push_back(make_shared<CPlayer>("Rick"));
-
-    // vector<shared_ptr<CPlayer>> players;
-    // players.push_back(make_shared<CPlayer>("Vyvyan"));
-    // players.push_back(make_shared<CPlayer>("Rick"));
 
     for (const auto& player : players)
     {
@@ -37,6 +34,8 @@ int main()
     unique_ptr<CGame> currentGame = make_unique<CGame>(players, board);
     // Start the currentGame
     currentGame->start();
+
+    currentGame->play();
 
     return 0;
 }

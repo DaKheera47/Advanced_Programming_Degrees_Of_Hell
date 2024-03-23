@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+#include "../CPlayer.h"
 #include "../CSpace.h"
 
 class CBogus : public CSpace
@@ -11,4 +12,5 @@ class CBogus : public CSpace
 protected:
 public:
     CBogus(ESpaceType type) : CSpace(type){};
+    void playerLanded(std::shared_ptr<CPlayer>& player) override;
 };

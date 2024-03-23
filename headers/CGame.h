@@ -36,4 +36,7 @@ public:
 
     // Start game
     void start();
+
+    // play game
+    void play();
 };

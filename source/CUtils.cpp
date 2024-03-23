@@ -1,9 +1,13 @@
 #include "CUtils.h"
 
+#include <algorithm>
 #include <ctime>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
+
+#include "CPlayer.h"
 
 using namespace std;
 
@@ -90,6 +94,12 @@ int CUtils::randInt(int start, int end)
     return rand() % range + start;
 }
 
+int CUtils::randInt()
+{
+    return static_cast<int>(
+        (static_cast<double>(rand()) / static_cast<double>(RAND_MAX + 1.0f)) * 10.0f + 1);
+}
+
 int CUtils::strToInt(const std::string& str)
 {
     try
@@ -110,3 +120,14 @@ int CUtils::charToInt(const char& c)
 {
     return c - '0';
 }
+
+template <typename T>
+bool CUtils::presentInVector(const std::vector<T>& vec, const T& item)
+{
+    return std::find(vec.begin(), vec.end(), item) != vec.end();
+}
+
+// Explicit instantiation of the template
+// https://stackoverflow.com/questions/2351148/explicit-template-instantiation-when-is-it-used
+template bool CUtils::presentInVector<std::shared_ptr<CPlayer>>(
+    const std::vector<std::shared_ptr<CPlayer>>&, const std::shared_ptr<CPlayer>&);

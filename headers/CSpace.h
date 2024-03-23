@@ -7,6 +7,8 @@
 // #include "CPlayer.h"
 #include "./enums/ESpaceType.h"
 
+class CPlayer;
+
 class CSpace
 {
 protected:
@@ -32,7 +34,7 @@ public:
     virtual ~CSpace() {}  // Virtual destructor for safe polymorphic use
 
     // Pure virtual function making CSpace abstract
-    // virtual void handlePlayerInteraction(std::unique_ptr<CPlayer>& player) = 0;
+    virtual void playerLanded(std::shared_ptr<CPlayer>& player) = 0;
 
     // Virtual getters
     virtual ESpaceType getType() const { return mType; }

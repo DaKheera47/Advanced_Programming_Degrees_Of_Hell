@@ -4,11 +4,17 @@
 #include <memory>
 #include <string>
 
+#include "../CGame.h"
+#include "../CPlayer.h"
 #include "../CSpace.h"
 
 class CAssessment : public CSpace
 {
-protected:
+private:
+    // needs to know who has completed the assessment
+    CPlayerVector mCompletedBy;
+
 public:
     CAssessment(ESpaceType type) : CSpace(type){};
+    void playerLanded(std::shared_ptr<CPlayer>& player) override;
 };

@@ -16,6 +16,12 @@ public:
     static int charToInt(const char& c);
     static int strToInt(const std::string& str);
     // 2 options so i can do randInt(5) and randInt(2, 7) if required
+    static int randInt();
     static int randInt(int end);
     static int randInt(int start, int end);
+
+    // find in vector
+    // https://stackoverflow.com/a/571405
+    template <typename T>
+    static bool presentInVector(const std::vector<T>& vec, const T& item);
 };

@@ -15,7 +15,7 @@
 
 std::shared_ptr<CSpace> FSpace::CreateNewSpace(ESpaceType incomingSpace)
 {
-    std::shared_ptr<CSpace> newSpace = std::make_shared<CSpace>();
+    std::shared_ptr<CSpace> newSpace;
 
     switch (incomingSpace)
     {

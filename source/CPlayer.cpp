@@ -20,11 +20,6 @@ CPlayer::~CPlayer()
     std::cout << "Destroying player: " << mName << std::endl;
 }
 
-std::string CPlayer::getName()
-{
-    return mName;
-}
-
 void CPlayer::setCurrentSpace(std::shared_ptr<CSpace> space)
 {
     mCurrentSpace = space;
