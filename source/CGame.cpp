@@ -71,7 +71,8 @@ void CGame::play()
 
             // print out the player's new success and motivation:
             std::cout << player->getName() << "'s motivation is " << player->getMotivation()
-                      << " and success is " << player->getSuccess() << std::endl;
+                      << " and success is " << player->getSuccess() << std::endl
+                      << std::endl;
         }
     }
 }
