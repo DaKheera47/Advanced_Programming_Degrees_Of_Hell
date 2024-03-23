@@ -15,6 +15,8 @@ public:
     {
         // set sucess by default to 20
         mSuccess = 20;
+        // set motivational cost by default to 100
+        mMotivationalCost = 100;
     };
 
     void playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override;
