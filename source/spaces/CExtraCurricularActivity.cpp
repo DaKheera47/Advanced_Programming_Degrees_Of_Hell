@@ -62,6 +62,7 @@ void CExtraCurricularActivity::playerLanded(std::shared_ptr<CPlayer>& player,
 
                 // update helper's success
                 helper->setSuccess(helper->getSuccess() + finalSuccess);
+                helper->setMotivation(helper->getMotivation() - finalMotivationalCost);
             }
         }
     }
