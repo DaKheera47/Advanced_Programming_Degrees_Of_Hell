@@ -1,1 +1,1 @@
-const int TOTAL_ROUNDS = 100;
+const int TOTAL_ROUNDS = 10;

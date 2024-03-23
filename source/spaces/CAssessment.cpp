@@ -12,12 +12,23 @@ void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
                           << std::endl);
 
     // make sure player hasn't already completed the assessment
-    if (CUtils::presentInVector(mCompletedBy, player))
+    bool alreadyCompleted = false;
+    for (const auto& weakPlayer : mCompletedBy)
+    {
+        if (auto sharedPlayer = weakPlayer.lock())
+        {
+            if (sharedPlayer == player)
+            {
+                alreadyCompleted = true;
+                break;
+            }
+        }
+    }
+
+    if (alreadyCompleted)
     {
         DEBUG_PRINT("Player " << player->getName() << " has already completed the " << mName
-                              << " assessment." << std::endl);
-
-        // nothing happens
+                              << " extra curricular activity." << std::endl);
         return;
     }
 
@@ -56,17 +67,20 @@ void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     {
         for (auto& helper : mCompletedBy)
         {
-            if (helper != player)
-            {
-                std::cout << "\t..." << helper->getName() << " helps and achieves " << finalSuccess
-                          << std::endl;
+            std::shared_ptr<CPlayer> lockedHelper = helper.lock();
 
-                // update helper's success
-                helper->setSuccess(helper->getSuccess() + finalSuccess);
+            if (lockedHelper != player)
+            {
+                std::cout << "\t..." << lockedHelper->getName() << " helps and achieves "
+                          << finalSuccess << std::endl;
+
+                // update lockedHelper's success
+                lockedHelper->setSuccess(lockedHelper->getSuccess() + finalSuccess);
             }
         }
     }
 
+    std::weak_ptr<CPlayer> weakPlayer = player;
     // add the player to mCompletedBy
-    mCompletedBy.push_back(player);
+    mCompletedBy.push_back(weakPlayer);
 }

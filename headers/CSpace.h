@@ -32,6 +32,11 @@ public:
         mYear = yearOfStudyValue;
     }
 
+    bool operator==(const CSpace& other) const
+    {
+        return this->mName == other.mName && this->mType == other.mType;
+    };
+
     virtual ~CSpace() {}  // Virtual destructor for safe polymorphic use
 
     // Pure virtual function making CSpace abstract

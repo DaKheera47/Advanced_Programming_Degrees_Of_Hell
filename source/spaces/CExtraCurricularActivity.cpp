@@ -11,12 +11,23 @@ void CExtraCurricularActivity::playerLanded(std::shared_ptr<CPlayer>& player,
                           << " extra curricular activity." << std::endl);
 
     // make sure player hasn't already completed the extra curricular activity
-    if (CUtils::presentInVector(mCompletedBy, player))
+    bool alreadyCompleted = false;
+    for (const auto& weakPlayer : mCompletedBy)
+    {
+        if (auto sharedPlayer = weakPlayer.lock())
+        {
+            if (sharedPlayer == player)
+            {
+                alreadyCompleted = true;
+                break;
+            }
+        }
+    }
+
+    if (alreadyCompleted)
     {
         DEBUG_PRINT("Player " << player->getName() << " has already completed the " << mName
                               << " extra curricular activity." << std::endl);
-
-        // nothing happens
         return;
     }
 
@@ -55,14 +66,15 @@ void CExtraCurricularActivity::playerLanded(std::shared_ptr<CPlayer>& player,
     {
         for (auto& helper : mCompletedBy)
         {
-            if (helper != player)
-            {
-                std::cout << "\t..." << helper->getName() << " motivates " << player->getName()
-                          << " and achieves " << finalSuccess << std::endl;
+            std::shared_ptr<CPlayer> lockedHelper = helper.lock();
 
-                // update helper's success
-                helper->setSuccess(helper->getSuccess() + finalSuccess);
-                helper->setMotivation(helper->getMotivation() - finalMotivationalCost);
+            if (lockedHelper != player)
+            {
+                std::cout << "\t..." << lockedHelper->getName() << " helps and achieves "
+                          << finalSuccess << std::endl;
+
+                // update lockedHelper's success
+                lockedHelper->setSuccess(lockedHelper->getSuccess() + finalSuccess);
             }
         }
     }
