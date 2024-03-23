@@ -9,6 +9,7 @@ using namespace std;
 #include "CPlayer.h"
 #include "CSpace.h"
 #include "CUtils.h"
+#include "Constants.h"
 
 int main()
 {
@@ -35,7 +36,7 @@ int main()
     // Start the currentGame
     currentGame->start();
 
-    currentGame->play();
+    currentGame->play(TOTAL_ROUNDS);
 
     return 0;
 }

@@ -38,5 +38,5 @@ public:
     void start();
 
     // play game
-    void play();
+    void play(const int& rounds = 10);
 };

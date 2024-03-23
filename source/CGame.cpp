@@ -26,11 +26,9 @@ void CGame::start()
     cout << "Welcome to Scumbag College" << endl;
 }
 
-const int TOTAL_ROUNDS = 10;
-
-void CGame::play()
+void CGame::play(const int& rounds)
 {
-    for (int roundNum = 1; roundNum <= TOTAL_ROUNDS; roundNum++)
+    for (int roundNum = 1; roundNum <= rounds; roundNum++)
     {
         cout << endl << "ROUND " << roundNum << endl;
         cout << "=========" << endl;
