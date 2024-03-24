@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Constants
 {
 public:
@@ -22,4 +24,19 @@ public:
      * @brief The maximum number of years in the game
      */
     static const int kMaxYears = 3;
+
+    /**
+     * @brief
+     * control which method of random number generation is used
+     * 0 means random mode
+     * 1 means read from file, for predictable testing
+     */
+    static const int kRandomMode = 1;
+
+    /**
+     * @brief
+     * control which file the random numbers are read from
+     * give the full file path from ./
+     */
+    static const std::string kRandFilePath;
 };

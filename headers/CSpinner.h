@@ -4,6 +4,9 @@
 
 class CSpinner
 {
+private:
+    static int spinIdx;
+
 public:
     /**
      * @brief Simulates a spin action, generating and returning a random integer.
