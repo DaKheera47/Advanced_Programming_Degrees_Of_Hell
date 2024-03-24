@@ -15,15 +15,26 @@ class CGame
 {
 private:
     CPlayerVector mPlayers;
-    std::unique_ptr<CBoard> mBoard;
+    std::unique_ptr<CBoard> mpBoard;
 
 public:
-    // constructor
-    CGame(CPlayerVector& players, std::unique_ptr<CBoard>& board);
+    /**
+     * @brief Constructor for CGame
+     *
+     * @param players The vector of players in the game
+     * @param pBoard The game board
+     */
+    CGame(CPlayerVector& players, std::unique_ptr<CBoard>& pBoard);
 
-    // Start game
-    void start();
+    /**
+     * @brief Start the game
+     */
+    void Start();
 
-    // play game
-    void play(const int rounds);
+    /**
+     * @brief Play the game for a specified number of rounds
+     *
+     * @param rounds The number of rounds to play
+     */
+    void Play(const int rounds);
 };

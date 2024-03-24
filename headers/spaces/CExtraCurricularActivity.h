@@ -9,15 +9,17 @@
 
 class CExtraCurricularActivity : public CAssessment
 {
-protected:
 public:
     CExtraCurricularActivity(ESpaceType type) : CAssessment(type)
     {
-        // set sucess by default to 20
         mSuccess = 20;
-        // set motivational cost by default to 100
-        mMotivationalCost = 100;
+        mMotivationCost = 100;
     };
 
-    void playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override;
+    /**
+     * Handles the event when a player lands on the extra-curricular activity space.
+     * @param player The player who landed on the space.
+     * @param board The game board.
+     */
+    void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override;
 };
