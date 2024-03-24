@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "CUtils.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -49,13 +50,51 @@ void CGame::play(const int rounds)
             // Move the player to the new position
             player->setCurrentSpace(mBoard->getSpaces()[newPosIndex]);
 
+            // Check for rollover
+            bool hasPassedWelcomeWeek = newPosIndex <= currentPosIndex;
+
+            // doing additional things if the player has passed the Welcome Week
+            if (hasPassedWelcomeWeek)
+            {
+                // motivation goes up by Constants::WW_MOTIV_INC
+                player->setMotivation(player->getMotivation() + Constants::WW_MOTIV_INC);
+                // message: ‘<Player> attends Welcome Week and starts year <year> more motivated!'
+                cout << player->getName() << " attends Welcome Week and starts year "
+                     << player->getYearOfStudy() << " more motivated!" << endl;
+
+                // year only increases if a player has done 3 of the assessments of this year.
+                vector<shared_ptr<CAssessment>> thisYearAssignments =
+                    player->getCompletedAssessments(player->getYearOfStudy());
+
+                // make sure there are at least 3 assessments completed of the same year
+                if (thisYearAssignments.size() < Constants::ASSESSMENTS_PER_YEAR)
+                {
+                    cout << player->getName()
+                         << " has not completed enough assessments to progress to the next year."
+                         << endl;
+                    continue;
+                }
+
+                // year increases by 1
+                player->setYearOfStudy(player->getYearOfStudy() + 1);
+
+                // check if the player has crossed year 3
+                if (player->getYearOfStudy() > Constants::MAX_YEARS)
+                {
+                    cout << "Congratulations! " << player->getName() << " has graduated!" << endl;
+
+                    cout << "Final stats: ";
+                    cout << *player;
+
+                    // end the game
+                    return;
+                }
+            }
+
             // get the player's current space to calculate the effect
             player->getCurrentSpace()->playerLanded(player, mBoard);
 
-            // print out the player's new success and motivation:
-            std::cout << player->getName() << "'s motivation is " << player->getMotivation()
-                      << " and success is " << player->getSuccess() << std::endl
-                      << std::endl;
+            cout << *player;
         }
     }
 }

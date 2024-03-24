@@ -23,6 +23,8 @@ int main()
     CPlayerVector players;
     players.push_back(make_shared<CPlayer>("Vyvyan"));
     players.push_back(make_shared<CPlayer>("Rick"));
+    // players.push_back(make_shared<CPlayer>("Neil"));
+    // players.push_back(make_shared<CPlayer>("Mike"));
 
     for (const auto& player : players)
     {

@@ -44,7 +44,25 @@ std::shared_ptr<CSpace> CPlayer::getCurrentSpace()
 // cout operator overload
 std::ostream& operator<<(std::ostream& os, const CPlayer& player)
 {
-    os << "Player: " << player.mName << " Motivation: " << player.mLevelOfMotivation
-       << " Success: " << player.mSuccess << " Year: " << player.mYearOfStudy;
+    // print out the player's new success and motivation:
+    os << player.mName << "'s motivation is " << player.mLevelOfMotivation << " and success is "
+       << player.mSuccess << std::endl
+       << std::endl;
+
     return os;
+}
+
+std::vector<std::shared_ptr<CAssessment>> CPlayer::getCompletedAssessments(int year)
+{
+    std::vector<std::shared_ptr<CAssessment>> assessmentsForYear;
+
+    for (const auto& assessment : mAssessments)
+    {
+        if (assessment->getYear() == year)
+        {
+            assessmentsForYear.push_back(assessment);
+        }
+    }
+
+    return assessmentsForYear;
 }

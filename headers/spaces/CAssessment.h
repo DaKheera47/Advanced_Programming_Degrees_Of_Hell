@@ -5,10 +5,12 @@
 #include <string>
 
 #include "../CGame.h"
-#include "../CPlayer.h"
+// #include "../CPlayer.h"
 #include "../CSpace.h"
 
-class CAssessment : public CSpace
+class CPlayer;
+
+class CAssessment : public CSpace, public std::enable_shared_from_this<CAssessment>
 {
 protected:
     // needs to know who has completed the assessment

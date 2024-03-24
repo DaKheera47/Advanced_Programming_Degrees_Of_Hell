@@ -1,10 +1,12 @@
 #include "../../headers/spaces/CAssessment.h"
 
 #include <iostream>
+#include <memory>
 
 #include "../../headers/CDebugUtils.h"
 #include "../../headers/CUtils.h"
 
+// https://embeddedartistry.com/blog/2017/01/11/stdshared_ptr-and-shared_from_this/
 void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
 {
     // debug print contents of mCompletedBy
@@ -79,6 +81,11 @@ void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
             }
         }
     }
+
+    // add this assessment to the player's completed assessments
+    // make a shared pointer to this assessment
+    std::shared_ptr<CAssessment> sharedThis = shared_from_this();
+    player->addAssessment(sharedThis);
 
     std::weak_ptr<CPlayer> weakPlayer = player;
     // add the player to mCompletedBy

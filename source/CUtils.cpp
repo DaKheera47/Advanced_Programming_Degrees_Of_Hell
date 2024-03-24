@@ -81,7 +81,7 @@ void CUtils::replace(std::string& str, const std::string& from, const std::strin
 int CUtils::randInt(int end)
 {
     // just call the randInt with 2 params
-    return CUtils::randInt(0, end);
+    return CUtils::randInt(1, end);
 }
 
 int CUtils::randInt(int start, int end)
