@@ -91,6 +91,10 @@ void CGame::Play(const int rounds)
                 }
             }
 
+            // print a message like Vyvyan lands on Ridiculously difficult Programming Task
+            cout << pPlayer->GetName() << " lands on " << pPlayer->GetCurrentSpace()->GetName()
+                 << endl;
+
             // Get the player's current space to calculate the effect
             pPlayer->GetCurrentSpace()->PlayerLanded(pPlayer, mpBoard);
 

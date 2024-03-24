@@ -8,7 +8,7 @@ public:
     /**
      * @brief The total number of rounds in the game
      */
-    static const int kTotalRounds = 100;
+    static const int kTotalRounds = 50;
 
     /**
      * @brief The motivation increase when a player attends Welcome Week

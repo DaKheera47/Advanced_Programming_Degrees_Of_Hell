@@ -36,11 +36,10 @@ void CBonus::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoa
     {
         if (spinResult == chance->spinResult)
         {
+            cout << player->GetName() << " spins " << spinResult << endl;
+
             player->SetMotivation(player->GetMotivation() + chance->value);
-            cout << player->GetName() << " lands on Bonus" << endl;
             cout << chance->message << ". " << "Gain Motivation of " << chance->value << endl;
-            cout << player->GetName() << " has " << player->GetMotivation() << " motivation"
-                 << endl;
         }
     }
 }

@@ -1,5 +1,6 @@
 #include "../../headers/spaces/CBogus.h"
 
+#include <cmath>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -36,11 +37,10 @@ void CBogus::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoa
     {
         if (spinResult == chance->spinResult)
         {
+            cout << player->GetName() << " spins " << spinResult << endl;
+
             player->SetMotivation(player->GetMotivation() + chance->value);
-            cout << player->GetName() << " lands on Bogus" << endl;
-            cout << chance->message << ". " << "Loses Motivation of " << chance->value << endl;
-            cout << player->GetName() << " has " << player->GetMotivation() << " motivation"
-                 << endl;
+            cout << chance->message << ". " << "Lose Motivation of " << abs(chance->value) << endl;
         }
     }
 }
