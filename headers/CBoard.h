@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "./enums/ESpaceType.h"
 #include "CSpace.h"
 
 class CBoard
@@ -16,4 +17,5 @@ public:
 
     // getters
     std::vector<std::shared_ptr<CSpace>> getSpaces();
+    std::vector<std::shared_ptr<CSpace>> getSpaces(ESpaceType type);
 };

@@ -105,3 +105,18 @@ std::vector<std::shared_ptr<CSpace>> CBoard::getSpaces()
 {
     return mSpaces;
 }
+
+std::vector<std::shared_ptr<CSpace>> CBoard::getSpaces(ESpaceType type)
+{
+    vector<std::shared_ptr<CSpace>> spaces;
+
+    for (const auto& space : mSpaces)
+    {
+        if (space->getType() == type)
+        {
+            spaces.push_back(space);
+        }
+    }
+
+    return spaces;
+}
