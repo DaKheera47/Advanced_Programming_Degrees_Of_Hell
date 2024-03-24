@@ -2,8 +2,8 @@
 
 #include "CUtils.h"
 
-int CSpinner::spin()
+int CSpinner::Spin()
 {
-    int result = CUtils::randInt(10);
+    int result = CUtils::RandInt(10);
     return result;
 }

@@ -3,82 +3,66 @@
 #include "../../headers/CDebugUtils.h"
 #include "../../headers/CUtils.h"
 
-void CExtraCurricularActivity::playerLanded(std::shared_ptr<CPlayer>& player,
+void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
                                             std::unique_ptr<CBoard>& board)
 {
-    // debug print contents of mCompletedBy
-    DEBUG_PRINT("Player " << player->getName() << " has completed the " << mName
-                          << " extra curricular activity." << std::endl);
+    DEBUG_PRINT("Player " + player->GetName() + " has completed the " + mName
+                + " extra curricular activity.");
 
-    // make sure player hasn't already completed the extra curricular activity
     bool alreadyCompleted = false;
     for (const auto& weakPlayer : mCompletedBy)
     {
-        if (auto sharedPlayer = weakPlayer.lock())
+        auto sharedPlayer = weakPlayer.lock();
+        if (sharedPlayer && sharedPlayer == player)
         {
-            if (sharedPlayer == player)
-            {
-                alreadyCompleted = true;
-                break;
-            }
+            alreadyCompleted = true;
+            break;
         }
     }
 
     if (alreadyCompleted)
     {
-        DEBUG_PRINT("Player " << player->getName() << " has already completed the " << mName
-                              << " extra curricular activity." << std::endl);
+        DEBUG_PRINT("Player " + player->GetName() + " has already completed the " + mName
+                    + " extra curricular activity.");
         return;
     }
 
-    // check if the player has enough motivation
-    if (player->getMotivation() < mMotivationalCost)
+    if (player->GetMotivation() < mMotivationCost)
     {
-        DEBUG_PRINT("Player " << player->getName()
-                              << " does not have enough motivation to complete the " << mName
-                              << " extra curricular activity." << std::endl);
-
-        // nothing happens
+        DEBUG_PRINT("Player " + player->GetName()
+                    + " does not have enough motivation to complete the " + mName
+                    + " extra curricular activity.");
         return;
     }
 
     int finalSuccess = mSuccess;
-    int finalMotivationalCost = mMotivationalCost;
+    int finalMotivationCost = mMotivationCost;
 
-    // if completed by another player, motivational cost and success rate are divided between all
-    // players
     if (mCompletedBy.size() > 1)
     {
         finalSuccess /= mCompletedBy.size();
-        finalMotivationalCost /= mCompletedBy.size();
+        finalMotivationCost /= mCompletedBy.size();
     }
 
-    // update player's success and motivation
-    player->setSuccess(player->getSuccess() + finalSuccess);
-    player->setMotivation(player->getMotivation() - finalMotivationalCost);
+    player->SetSuccess(player->GetSuccess() + finalSuccess);
+    player->SetMotivation(player->GetMotivation() - finalMotivationCost);
 
-    // if player has completed the extra curricular activity, print out a message
-    std::cout << player->getName() << " undertakes " << mName << " for " << finalMotivationalCost
+    std::cout << player->GetName() << " undertakes " << mName << " for " << finalMotivationCost
               << " and achieves " << finalSuccess << std::endl;
 
-    // if player needed help to complete the extra curricular activity, print out a message
     if (mCompletedBy.size() > 1)
     {
         for (auto& helper : mCompletedBy)
         {
-            std::shared_ptr<CPlayer> lockedHelper = helper.lock();
-
-            if (lockedHelper != player)
+            auto lockedHelper = helper.lock();
+            if (lockedHelper && lockedHelper != player)
             {
-                std::cout << "\t..." << lockedHelper->getName() << " helps and achieves "
+                std::cout << "\t..." << lockedHelper->GetName() << " helps and achieves "
                           << finalSuccess << std::endl;
-
-                // update lockedHelper's success
-                lockedHelper->setSuccess(lockedHelper->getSuccess() + finalSuccess);
+                lockedHelper->SetSuccess(lockedHelper->GetSuccess() + finalSuccess);
             }
         }
     }
 
-    // add the player to mCompletedBy
     mCompletedBy.push_back(player);
 }

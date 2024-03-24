@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-using namespace std;
+#include <string>
 
 #include "../headers/factory/FSpace.h"
 #include "CBoard.h"
@@ -11,12 +11,14 @@ using namespace std;
 #include "CUtils.h"
 #include "Constants.h"
 
+using namespace std;
+
 int main()
 {
-    // seeding the random number generator
-    // get the seed from seed.txt
-    string firstLine = CUtils::readFileLines("./static/seed.txt")[0];
-    int seed = CUtils::strToInt(firstLine);
+    // Seeding the random number generator
+    // Get the seed from seed.txt
+    string firstLine = CUtils::ReadFileLines("./static/seed.txt")[0];
+    int seed = CUtils::StrToInt(firstLine);
     DEBUG_PRINT("Seed: " << seed);
     srand(seed);
 
@@ -28,18 +30,18 @@ int main()
 
     for (const auto& player : players)
     {
-        DEBUG_PRINT("Player name: " << player->getName());
+        DEBUG_PRINT("Player name: " << player->GetName());
     }
 
-    // create the board
-    unique_ptr<CBoard> board = make_unique<CBoard>("./static/degrees.txt");
+    // Create the board
+    unique_ptr<CBoard> pBoard = make_unique<CBoard>("./static/degrees.txt");
 
-    unique_ptr<CGame> currentGame = make_unique<CGame>(players, board);
+    unique_ptr<CGame> pCurrentGame = make_unique<CGame>(players, pBoard);
 
-    // Start the currentGame
-    currentGame->start();
+    // Start the current game
+    pCurrentGame->Start();
 
-    currentGame->play(Constants::TOTAL_ROUNDS);
+    pCurrentGame->Play(Constants::kTotalRounds);
 
     return 0;
 }

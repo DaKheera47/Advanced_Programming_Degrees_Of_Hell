@@ -6,88 +6,74 @@
 #include "../../headers/CDebugUtils.h"
 #include "../../headers/CUtils.h"
 
-// https://embeddedartistry.com/blog/2017/01/11/stdshared_ptr-and-shared_from_this/
-void CAssessment::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
+CAssessment::~CAssessment()
 {
-    // debug print contents of mCompletedBy
-    DEBUG_PRINT("Player " << player->getName() << " has completed the " << mName << " assessment."
-                          << std::endl);
+    // clean up all players
+    mCompletedBy.clear();
+}
 
-    // make sure player hasn't already completed the assessment
+void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
+{
+    // Check if player has already completed the assessment
     bool alreadyCompleted = false;
     for (const auto& weakPlayer : mCompletedBy)
     {
-        if (auto sharedPlayer = weakPlayer.lock())
+        auto sharedPlayer = weakPlayer.lock();
+        if (sharedPlayer && sharedPlayer == player)
         {
-            if (sharedPlayer == player)
-            {
-                alreadyCompleted = true;
-                break;
-            }
+            alreadyCompleted = true;
+            break;
         }
     }
 
     if (alreadyCompleted)
     {
-        DEBUG_PRINT("Player " << player->getName() << " has already completed the " << mName
-                              << " extra curricular activity." << std::endl);
+        // Player has already completed this assessment, no further action is taken.
         return;
     }
 
-    // check if the player has enough motivation
-    if (player->getMotivation() < mMotivationalCost)
+    // Verify if the player has enough motivation to attempt this assessment
+    if (player->GetMotivation() < mMotivationCost)
     {
-        DEBUG_PRINT("Player " << player->getName()
-                              << " does not have enough motivation to complete the " << mName
-                              << " assessment." << std::endl);
-
-        // nothing happens
+        // Insufficient motivation, player cannot attempt the assessment.
         return;
     }
 
+    // Calculate the final success and motivational cost, accounting for shared efforts if
+    // applicable
     int finalSuccess = mSuccess;
-    int finalMotivationalCost = mMotivationalCost;
+    int finalMotivationCost = mMotivationCost;
 
-    // if completed by another player, motivational cost and success rate are divided between all
-    // players
     if (mCompletedBy.size() > 1)
     {
         finalSuccess /= mCompletedBy.size();
-        finalMotivationalCost /= mCompletedBy.size();
+        finalMotivationCost /= mCompletedBy.size();
     }
 
-    // update player's success and motivation
-    player->setSuccess(player->getSuccess() + finalSuccess);
-    player->setMotivation(player->getMotivation() - finalMotivationalCost);
+    // Apply the assessment's effects to the player
+    player->SetSuccess(player->GetSuccess() + finalSuccess);
+    player->SetMotivation(player->GetMotivation() - finalMotivationCost);
 
-    // if player has completed the assessment, print out a message
-    std::cout << player->getName() << " completes " << mName << " for " << finalMotivationalCost
+    std::cout << player->GetName() << " completes " << mName << " for " << finalMotivationCost
               << " and achieves " << finalSuccess << std::endl;
 
-    // if player needed help to complete the assessment, print out a message
+    // Acknowledge contributions from other players, if any
     if (mCompletedBy.size() > 1)
     {
         for (auto& helper : mCompletedBy)
         {
-            std::shared_ptr<CPlayer> lockedHelper = helper.lock();
-
-            if (lockedHelper != player)
+            auto lockedHelper = helper.lock();
+            if (lockedHelper && lockedHelper != player)
             {
-                std::cout << "\t..." << lockedHelper->getName() << " helps and achieves "
+                std::cout << "\t..." << lockedHelper->GetName() << " helps and achieves "
                           << finalSuccess << std::endl;
-
-                // update lockedHelper's success
-                lockedHelper->setSuccess(lockedHelper->getSuccess() + finalSuccess);
+                lockedHelper->SetSuccess(lockedHelper->GetSuccess() + finalSuccess);
             }
         }
     }
 
-    // add this assessment to the player's completed assessments
-    // make a shared pointer to this assessment
+    // Record the player's completion of this assessment
     std::shared_ptr<CAssessment> sharedThis = shared_from_this();
-    player->addAssessment(sharedThis);
-
-    std::weak_ptr<CPlayer> weakPlayer = player;
-    // add the player to mCompletedBy
-    mCompletedBy.push_back(weakPlayer);
+    player->AddAssessment(sharedThis);
+    mCompletedBy.push_back(player);
 }

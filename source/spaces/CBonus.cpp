@@ -12,41 +12,34 @@ using namespace std;
 
 CBonus::CBonus(ESpaceType type) : CSpace(type)
 {
-    // populate the chanceValues vector with the values from "BonusData.csv"
-    // get the file content
-    vector<string> bonusContent = CUtils::readFileLines("./static/BonusData.csv");
+    // Populate the mChanceValues vector with the values from "BonusData.csv"
+    vector<string> bonusContent = CUtils::ReadFileLines("./static/BonusData.csv");
 
-    // iterate through the file, and print
     for (const string& line : bonusContent)
     {
-        vector<string> row = CUtils::split(line, ',');
+        vector<string> row = CUtils::Split(line, ',');
 
-        int spinResult = CUtils::strToInt(row[0]);
+        int spinResult = CUtils::StrToInt(row[0]);
         string message = row[1];
-        int value = CUtils::strToInt(row[2]);
+        int value = CUtils::StrToInt(row[2]);
 
-        // create the SChance objects
         shared_ptr<SChance> chance = make_shared<SChance>(spinResult, message, value);
-
-        // add the SChance objects to the chanceValues vector
-        chanceValues.push_back(chance);
+        mChanceValues.push_back(chance);
     }
 }
 
-void CBonus::playerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
+void CBonus::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
 {
-    // spin the spinner again
-    const int spinResult = CSpinner::spin();
+    const int spinResult = CSpinner::Spin();
 
-    // take action according to the thingy given in the table
-    for (const auto& chance : chanceValues)
+    for (const auto& chance : mChanceValues)
     {
         if (spinResult == chance->spinResult)
         {
-            player->setMotivation(player->getMotivation() + chance->value);
-            cout << player->getName() << " lands on Bonus" << endl;
+            player->SetMotivation(player->GetMotivation() + chance->value);
+            cout << player->GetName() << " lands on Bonus" << endl;
             cout << chance->message << ". " << "Gain Motivation of " << chance->value << endl;
-            cout << player->getName() << " has " << player->getMotivation() << " motivation"
+            cout << player->GetName() << " has " << player->GetMotivation() << " motivation"
                  << endl;
         }
     }

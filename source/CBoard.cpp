@@ -7,12 +7,18 @@
 #include "../headers/factory/FSpace.h"
 #include "CDebugUtils.h"
 #include "CUtils.h"
+
 using namespace std;
 
-CBoard::CBoard(string filename)
+CBoard::~CBoard()
+{
+    // clean up the spaces
+    mSpaces.clear();
+}
+
+CBoard::CBoard(const std::string& filename)
 {
     unique_ptr<FSpace> spaceFactory = make_unique<FSpace>();
-
     ifstream file(filename);
     vector<string> lines;
     string line;
@@ -27,20 +33,20 @@ CBoard::CBoard(string filename)
         lines.push_back(line);
     }
 
-    for (size_t idx = 0; idx < lines.size(); ++idx)
+    for (const auto& line : lines)
     {
-        string line = lines[idx];
+        string currentLine = line;
         string spaceName;
 
-        char spaceType = line[0];
+        char spaceType = currentLine[0];
 
-        // remove the first 2 characters from line
-        if (line.length() >= 2)
+        // Remove the first 2 characters from line
+        if (currentLine.length() >= 2)
         {
-            line.erase(0, 2);
+            currentLine.erase(0, 2);
         }
 
-        for (auto ch : line)
+        for (auto ch : currentLine)
         {
             if (ch != EOF && !isdigit(ch))
             {
@@ -48,75 +54,52 @@ CBoard::CBoard(string filename)
             }
         }
 
-        // strip line
-        line = CUtils::strip(line);
-        // strip spaceName
-        spaceName = CUtils::strip(spaceName);
+        spaceName = CUtils::Strip(spaceName);
 
-        CUtils::replace(line, spaceName, "");
+        CUtils::Replace(currentLine, spaceName, "");
 
-        // strip line
-        line = CUtils::strip(line);
+        currentLine = CUtils::Strip(currentLine);
 
-        string spaceMotivation = "Unknown";
-        string spaceSuccess = "Unknown";
-        string spaceYear = "Unknown";
+        vector<string> spaceDetails = CUtils::Split(currentLine, ' ');
 
-        // if at this point line isn't empty, it means this space has a motivation, success and year
-        vector<string> spaceDetails = CUtils::split(line, ' ');
-
-        std::shared_ptr<CSpace> space =
-            spaceFactory->CreateNewSpace(ESpaceType(CUtils::charToInt(spaceType)));
-
-        space->setName(spaceName);
+        auto space =
+            spaceFactory->CreateNewSpace(static_cast<ESpaceType>(CUtils::CharToInt(spaceType)));
+        space->SetName(spaceName);
 
         try
         {
-            spaceMotivation = spaceDetails.at(0);
-            spaceSuccess = spaceDetails.at(1);
-            spaceYear = spaceDetails.at(2);
-
-            space->setMotivationalCost(CUtils::strToInt(spaceMotivation));
-            space->setSuccess(CUtils::strToInt(spaceSuccess));
-            space->setYear(CUtils::strToInt(spaceYear));
+            if (spaceDetails.size() >= 3)
+            {
+                space->SetMotivationCost(CUtils::StrToInt(spaceDetails.at(0)));
+                space->SetSuccess(CUtils::StrToInt(spaceDetails.at(1)));
+                space->SetYear(CUtils::StrToInt(spaceDetails.at(2)));
+            }
         }
         catch (const std::out_of_range& e)
         {
-            // if it's a space without the extra details
-            // a space may or may not have extra details
-            // cout << "Out of Range Error on " << e.what() << endl;
+            // Handle spaces without extra details or incorrect file format gracefully.
         }
 
         mSpaces.push_back(space);
     }
-
-    // for (const auto& space : mSpaces)
-    // {
-    //     cout << "space type: " << static_cast<int>(space->getType())
-    //          << ", space name: " << space->getName()
-    //          << ", Motivation: " << space->getMotivationalCost()
-    //          << ", Success: " << space->getSuccess() << ", Year: " << space->getYear() << endl;
-    // }
 }
 
-CBoard::~CBoard() {}
-
-std::vector<std::shared_ptr<CSpace>> CBoard::getSpaces()
+std::vector<std::shared_ptr<CSpace>> CBoard::GetSpaces() const
 {
     return mSpaces;
 }
 
-std::vector<std::shared_ptr<CSpace>> CBoard::getSpaces(ESpaceType type)
+std::vector<std::shared_ptr<CSpace>> CBoard::GetSpaces(ESpaceType type) const
 {
-    vector<std::shared_ptr<CSpace>> spaces;
+    vector<std::shared_ptr<CSpace>> spacesFiltered;
 
     for (const auto& space : mSpaces)
     {
-        if (space->getType() == type)
+        if (space->GetType() == type)
         {
-            spaces.push_back(space);
+            spacesFiltered.push_back(space);
         }
     }
 
-    return spaces;
+    return spacesFiltered;
 }

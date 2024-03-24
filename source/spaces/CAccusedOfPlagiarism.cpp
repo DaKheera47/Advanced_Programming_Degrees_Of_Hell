@@ -2,22 +2,22 @@
 
 #include "../../headers/CGame.h"
 
-void CAccusedOfPlagiarism::playerLanded(std::shared_ptr<CPlayer>& player,
+void CAccusedOfPlagiarism::PlayerLanded(std::shared_ptr<CPlayer>& player,
                                         std::unique_ptr<CBoard>& board)
 {
     // player moves to the Plagiarism Hearing space
-    for (auto& space : board->getSpaces())
+    for (auto& space : board->GetSpaces())
     {
-        if (space->getType() == ESpaceType::PLAGIARISM_HEARING)
+        if (space->GetType() == ESpaceType::PLAGIARISM_HEARING)
         {
-            player->setCurrentSpace(space);
+            player->SetCurrentSpace(space);
         }
     }
 
     // output message: '<Player> lands on Accused of Plagiarism and goes to the hearing'
-    std::cout << player->getName() << " lands on Accused of Plagiarism and goes to the hearing"
+    std::cout << player->GetName() << " lands on Accused of Plagiarism and goes to the hearing"
               << std::endl;
 
     // player loses 50 motivation
-    player->setMotivation(player->getMotivation() - 50);
+    player->SetMotivation(player->GetMotivation() - 50);
 }

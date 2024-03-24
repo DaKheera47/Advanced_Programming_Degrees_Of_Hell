@@ -2,22 +2,22 @@
 
 #include <iostream>
 
-CPlayer::CPlayer(std::string name, int levelOfMotivation, int success, int yearOfStudy)
+CPlayer::CPlayer(std::string name, int motivation, int success, int yearOfStudy)
 {
     mName = name;
-    mLevelOfMotivation = levelOfMotivation;
+    mMotivation = motivation;
     mSuccess = success;
     mYearOfStudy = yearOfStudy;
 }
 
-void CPlayer::setMotivation(int levelOfMotivation)
+void CPlayer::SetMotivation(int motivation)
 {
-    mLevelOfMotivation = levelOfMotivation;
+    mMotivation = motivation;
 
-    // make sure motivation doesn't go below 0
-    if (mLevelOfMotivation < 0)
+    // Make sure motivation doesn't go below 0
+    if (mMotivation < 0)
     {
-        mLevelOfMotivation = 0;
+        mMotivation = 0;
     }
 }
 
@@ -31,36 +31,36 @@ CPlayer::~CPlayer()
     std::cout << "Destroying player: " << mName << std::endl;
 }
 
-void CPlayer::setCurrentSpace(std::shared_ptr<CSpace> space)
+void CPlayer::SetCurrentSpace(std::shared_ptr<CSpace> pSpace)
 {
-    mCurrentSpace = space;
+    mpCurrentSpace = pSpace;
 }
 
-std::shared_ptr<CSpace> CPlayer::getCurrentSpace()
+std::shared_ptr<CSpace> CPlayer::GetCurrentSpace()
 {
-    return mCurrentSpace;
+    return mpCurrentSpace;
 }
 
 // cout operator overload
 std::ostream& operator<<(std::ostream& os, const CPlayer& player)
 {
-    // print out the player's new success and motivation:
-    os << player.mName << "'s motivation is " << player.mLevelOfMotivation << " and success is "
+    // Print out the player's new success and motivation
+    os << player.mName << "'s motivation is " << player.mMotivation << " and success is "
        << player.mSuccess << std::endl
        << std::endl;
 
     return os;
 }
 
-std::vector<std::shared_ptr<CAssessment>> CPlayer::getCompletedAssessments(int year)
+std::vector<std::shared_ptr<CAssessment>> CPlayer::GetCompletedAssessments(int year)
 {
     std::vector<std::shared_ptr<CAssessment>> assessmentsForYear;
 
-    for (const auto& assessment : mAssessments)
+    for (const auto& pAssessment : mAssessments)
     {
-        if (assessment->getYear() == year)
+        if (pAssessment->GetYear() == year)
         {
-            assessmentsForYear.push_back(assessment);
+            assessmentsForYear.push_back(pAssessment);
         }
     }
 

@@ -11,6 +11,9 @@
 
 class CBonus : public CSpace
 {
+private:
+    std::vector<std::shared_ptr<SChance>> mChanceValues;
+
 public:
     CBonus(ESpaceType type);
 
