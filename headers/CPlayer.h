@@ -57,7 +57,7 @@ public:
      *
      * @param motivation The new motivation level
      */
-    void SetMotivation(int motivation);
+    void SetMotivation(int motivation) { mMotivation = motivation; }
 
     /**
      * @brief Set the current space of the player
@@ -78,7 +78,7 @@ public:
      *
      * @param success The new success level
      */
-    void SetSuccess(int success) { mSuccess = success; }
+    void SetSuccess(int success);
 
     /**
      * @brief Set the year of study of the player

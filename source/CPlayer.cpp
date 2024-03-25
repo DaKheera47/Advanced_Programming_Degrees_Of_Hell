@@ -10,17 +10,6 @@ CPlayer::CPlayer(std::string name, int motivation, int success, int yearOfStudy)
     mYearOfStudy = yearOfStudy;
 }
 
-void CPlayer::SetMotivation(int motivation)
-{
-    mMotivation = motivation;
-
-    // Make sure motivation doesn't go below 0
-    if (mMotivation < 0)
-    {
-        mMotivation = 0;
-    }
-}
-
 CPlayer::CPlayer(std::string name)
 {
     mName = name;
@@ -34,6 +23,17 @@ CPlayer::~CPlayer()
 void CPlayer::SetCurrentSpace(std::shared_ptr<CSpace> pSpace)
 {
     mpCurrentSpace = pSpace;
+}
+
+void CPlayer::SetSuccess(int success)
+{
+    mSuccess = success;
+
+    // Ensure success is not negative
+    if (mSuccess < 0)
+    {
+        mSuccess = 0;
+    }
 }
 
 std::shared_ptr<CSpace> CPlayer::GetCurrentSpace()
