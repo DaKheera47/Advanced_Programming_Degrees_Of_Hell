@@ -35,7 +35,7 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     if (mCompletedBy.size() >= 1)
     {
         finalSuccess /= (mCompletedBy.size() + 1);
-        finalMotivationCost /= (mCompletedBy.size() + 1);
+        finalMotivationCost /= 2;
     }
 
     // Verify if the player has enough motivation to attempt this assessment

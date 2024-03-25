@@ -26,7 +26,7 @@ void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
     if (mCompletedBy.size() >= 1)
     {
         finalSuccess /= (mCompletedBy.size() + 1);
-        finalMotivationCost /= (mCompletedBy.size() + 1);
+        finalMotivationCost /= 2;
     }
 
     // Verify if the player has enough motivation to do this extra curricular activity
