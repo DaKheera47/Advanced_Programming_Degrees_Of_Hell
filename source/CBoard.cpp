@@ -82,6 +82,9 @@ CBoard::CBoard(const std::string& filename)
 
         mSpaces.push_back(space);
     }
+
+    // close the file
+    file.close();
 }
 
 std::vector<std::shared_ptr<CSpace>> CBoard::GetSpaces() const
