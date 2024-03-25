@@ -47,8 +47,8 @@ void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
     player->SetSuccess(player->GetSuccess() + finalSuccess);
     player->SetMotivation(player->GetMotivation() - finalMotivationCost);
 
-    std::cout << player->GetName() << " undertakes " << mName << " for " << finalMotivationCost
-              << " and achieves " << finalSuccess << std::endl;
+    std::cout << player->GetName() << " undertakes " << mName << " extra curricular activity for "
+              << finalMotivationCost << " and achieves " << finalSuccess << std::endl;
 
     if (mCompletedBy.size() > 1)
     {

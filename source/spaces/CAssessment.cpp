@@ -15,23 +15,16 @@ CAssessment::~CAssessment()
 void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board)
 {
     // Check if player has already completed the assessment
-    bool alreadyCompleted = false;
     for (const auto& weakPlayer : mCompletedBy)
     {
         auto sharedPlayer = weakPlayer.lock();
         if (sharedPlayer && sharedPlayer == player)
         {
-            alreadyCompleted = true;
+            // message output
+            std::cout << player->GetName() << " has already completed " << mName << std::endl;
             // Player has already completed this assessment, no further action is taken.
             return;
         }
-    }
-
-    // Verify if the player has enough motivation to attempt this assessment
-    if (player->GetMotivation() < mMotivationCost)
-    {
-        // Insufficient motivation, player cannot attempt the assessment.
-        return;
     }
 
     // Calculate the final success and motivational cost, accounting for shared efforts if
@@ -43,6 +36,16 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     {
         finalSuccess /= (mCompletedBy.size() + 1);
         finalMotivationCost /= (mCompletedBy.size() + 1);
+    }
+
+    // Verify if the player has enough motivation to attempt this assessment
+    if (player->GetMotivation() < finalMotivationCost)
+    {
+        std::cout << player->GetName() << " doesn't have the " << finalMotivationCost
+                  << " motivation to complete " << mName << std::endl;
+
+        // Insufficient motivation, player cannot attempt the assessment.
+        return;
     }
 
     // Apply the assessment's effects to the player

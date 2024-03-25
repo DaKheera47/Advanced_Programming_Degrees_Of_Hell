@@ -66,8 +66,8 @@ void CGame::Play(const int rounds)
                 if (thisYearAssignments.size() < Constants::kAssessmentsPerYear)
                 {
                     cout << pPlayer->GetName()
-                         << " has not completed enough assessments to progress to the next year."
-                         << endl;
+                         << " has not completed enough assessments to progress to year "
+                         << pPlayer->GetYearOfStudy() + 1 << endl;
 
                     // Message is for starting the year again
                     cout << pPlayer->GetName() << " attends Welcome Week and starts year "
