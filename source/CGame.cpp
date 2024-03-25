@@ -58,10 +58,6 @@ void CGame::Play(const int rounds)
             {
                 // Motivation goes up by Constants::kWwMotivInc
                 pPlayer->SetMotivation(pPlayer->GetMotivation() + Constants::kWwMotivInc);
-                // Message: '<Player> attends Welcome Week and starts year <year> more motivated!'
-                cout << pPlayer->GetName() << " attends Welcome Week and starts year "
-                     << pPlayer->GetYearOfStudy() << " more motivated!" << endl;
-
                 // Year only increases if a player has done 3 of the assessments of this year.
                 vector<shared_ptr<CAssessment>> thisYearAssignments =
                     pPlayer->GetCompletedAssessments(pPlayer->GetYearOfStudy());
@@ -72,22 +68,37 @@ void CGame::Play(const int rounds)
                     cout << pPlayer->GetName()
                          << " has not completed enough assessments to progress to the next year."
                          << endl;
-                    continue;
+
+                    // Message is for starting the year again
+                    cout << pPlayer->GetName() << " attends Welcome Week and starts year "
+                         << pPlayer->GetYearOfStudy() << " again!" << endl;
                 }
-
-                // Year increases by 1
-                pPlayer->SetYearOfStudy(pPlayer->GetYearOfStudy() + 1);
-
-                // Check if the player has crossed year 3
-                if (pPlayer->GetYearOfStudy() > Constants::kMaxYears)
+                else
                 {
-                    cout << "Congratulations! " << pPlayer->GetName() << " has graduated!" << endl;
+                    // being here means new year starting
+                    // Year increases by 1
+                    pPlayer->SetYearOfStudy(pPlayer->GetYearOfStudy() + 1);
 
-                    cout << "Final stats: ";
-                    cout << *pPlayer;
+                    // Message for starting a new year
+                    cout << pPlayer->GetName() << " has successfully completed Year "
+                         << pPlayer->GetYearOfStudy() - 1 << endl;
 
-                    // End the game
-                    return;
+                    // Check if the player has crossed year 3
+                    if (pPlayer->GetYearOfStudy() > Constants::kMaxYears)
+                    {
+                        cout << "Congratulations! " << pPlayer->GetName() << " has graduated!"
+                             << endl;
+
+                        cout << "Final stats: ";
+                        cout << *pPlayer;
+
+                        // End the game
+                        return;
+                    }
+
+                    // Message for starting the year only if the player has not graduated
+                    cout << pPlayer->GetName() << " attends Welcome Week and starts year "
+                         << pPlayer->GetYearOfStudy() << "!" << endl;
                 }
             }
 
