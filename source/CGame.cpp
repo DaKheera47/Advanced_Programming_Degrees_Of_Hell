@@ -89,6 +89,9 @@ void CGame::Play(const int rounds)
                         cout << "Congratulations to " << pPlayer->GetName()
                              << " on their Graduation Day!" << endl;
 
+                        // Set the player as the winner
+                        pPlayer->SetHasWon(true);
+
                         // End the game
                         return;
                     }
@@ -122,7 +125,7 @@ void CGame::End()
 
     for (const auto& pPlayer : mPlayers)
     {
-        if (pPlayer->GetSuccess() > pWinner->GetSuccess())
+        if (pPlayer->GetSuccess() > pWinner->GetSuccess() && pPlayer->GetHasWon())
         {
             pWinner = pPlayer;
         }

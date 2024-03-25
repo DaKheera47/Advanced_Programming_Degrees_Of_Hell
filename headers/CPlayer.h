@@ -20,6 +20,9 @@ private:
     std::shared_ptr<CSpace> mpCurrentSpace;
     std::vector<std::shared_ptr<CAssessment>> mAssessments;
 
+    bool mHasWon = false;
+    bool mHasDroppedOut = false;
+
 public:
     /**
      * @brief Constructor for CPlayer
@@ -88,6 +91,13 @@ public:
     void SetYearOfStudy(int yearOfStudy) { mYearOfStudy = yearOfStudy; }
 
     /**
+     * @brief Set the has won status of the player
+     *
+     * @param hasWon The new has won status
+     */
+    void SetHasWon(bool hasWon) { mHasWon = hasWon; }
+
+    /**
      * @brief Add an assessment to the player's completed assessments
      *
      * @param pAssessment The assessment to be added
@@ -131,6 +141,13 @@ public:
      * @return The year of study of the player
      */
     int GetYearOfStudy() const { return mYearOfStudy; }
+
+    /**
+     * @brief has the player won the game
+     *
+     * @return true if the player has won the game
+     */
+    bool GetHasWon() const { return mHasWon; }
 
     /**
      * @brief Get all the completed assessments of the player
