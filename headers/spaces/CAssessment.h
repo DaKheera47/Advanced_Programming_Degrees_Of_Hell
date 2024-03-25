@@ -20,6 +20,13 @@ public:
 
     ~CAssessment() override;
 
+    // get and set for mCompletedBy
+    std::vector<std::weak_ptr<CPlayer>> GetCompletedBy() { return mCompletedBy; }
+    void SetCompletedBy(std::vector<std::weak_ptr<CPlayer>> completedBy)
+    {
+        mCompletedBy = completedBy;
+    }
+
     /**
      * Handles the event when a player lands on the assessment space.
      * @param player The player who landed on the space.

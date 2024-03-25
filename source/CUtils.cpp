@@ -149,3 +149,8 @@ int CUtils::GetSpaceIndex(const vector<shared_ptr<CSpace>>& spaces,
 
     return -1;  // Indicates not found
 }
+
+bool CUtils::compareAssessments(const shared_ptr<CAssessment>& a, const shared_ptr<CAssessment>& b)
+{
+    return a->GetMotivationCost() < b->GetMotivationCost();
+}

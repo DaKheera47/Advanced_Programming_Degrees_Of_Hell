@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./spaces/CAssessment.h"
 #include "CSpace.h"
 
 class CUtils
@@ -90,4 +91,13 @@ public:
      */
     static int GetSpaceIndex(const std::vector<std::shared_ptr<CSpace>>& spaces,
                              std::shared_ptr<CSpace>& pCurrentSpace);
+
+    /**
+     * @brief sorts the assessments by motivation cost, to be used in sorting
+     *
+     * @param a Shared pointer to the first assessment
+     * @param b Shared pointer to the second assessment
+     **/
+    static bool compareAssessments(const std::shared_ptr<CAssessment>& a,
+                                   const std::shared_ptr<CAssessment>& b);
 };

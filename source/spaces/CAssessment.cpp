@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <set>
 
 #include "../../headers/CDebugUtils.h"
 #include "../../headers/CUtils.h"
@@ -18,12 +19,17 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     for (const auto& weakPlayer : mCompletedBy)
     {
         auto sharedPlayer = weakPlayer.lock();
-        if (sharedPlayer && sharedPlayer == player)
+
+        // check if the player's getCompletedAssessments() has the assessment
+        for (const auto& assess : sharedPlayer->GetCompletedAssessments())
         {
-            // message output
-            std::cout << player->GetName() << " has already completed " << mName << std::endl;
-            // Player has already completed this assessment, no further action is taken.
-            return;
+            if (sharedPlayer == player && assess == shared_from_this())
+            {
+                // message output
+                std::cout << player->GetName() << " has already completed " << mName << std::endl;
+                // Player has already completed this assessment, no further action is taken.
+                return;
+            }
         }
     }
 
@@ -34,7 +40,20 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
 
     if (mCompletedBy.size() >= 1)
     {
-        finalSuccess /= (mCompletedBy.size() + 1);
+        int count = 0;
+
+        // counting the number of helpers, excluding the player themselvess
+        for (const auto& helper : mCompletedBy)
+        {
+            auto lockedHelper = helper.lock();
+
+            if (lockedHelper && lockedHelper != player)
+            {
+                count++;
+            }
+        }
+
+        finalSuccess /= count + 1;
         finalMotivationCost /= 2;
     }
 
@@ -74,5 +93,26 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     // Record the player's completion of this assessment
     std::shared_ptr<CAssessment> sharedThis = shared_from_this();
     player->AddAssessment(sharedThis);
+
     mCompletedBy.push_back(player);
+
+    // make sure there are no duplicates
+    // Temporary set for holding unique shared_ptrs to ensure no duplicates
+    std::set<std::shared_ptr<CPlayer>> uniqueCompletedBy;
+
+    // Fill the set with elements from mCompletedBy to remove duplicates
+    for (const auto& weakPtr : mCompletedBy)
+    {
+        if (auto sharedPtr = weakPtr.lock())
+        {  // Ensure the weak_ptr is valid
+            uniqueCompletedBy.insert(sharedPtr);
+        }
+    }
+
+    // Clear mCompletedBy and repopulate it from the set, now containing only unique elements
+    mCompletedBy.clear();
+    for (const auto& uniqueSharedPtr : uniqueCompletedBy)
+    {
+        mCompletedBy.push_back(uniqueSharedPtr);
+    }
 }

@@ -18,7 +18,8 @@ private:
     int mYearOfStudy = 1;
 
     std::shared_ptr<CSpace> mpCurrentSpace;
-    std::vector<std::shared_ptr<CAssessment>> mAssessments;
+    std::vector<std::shared_ptr<CAssessment>> mCompletedAssessments;
+    std::vector<std::shared_ptr<CAssessment>> mDeferredAssessments;
 
     bool mHasWon = false;
     bool mHasDroppedOut = false;
@@ -45,6 +46,54 @@ public:
      * @brief Destructor for CPlayer
      */
     ~CPlayer();
+
+    /**
+     * @brief Defer an assessment
+     *
+     * @param pAssessment The assessment to be deferred
+     */
+    void DeferAssessment(std::shared_ptr<CAssessment>& pAssessment);
+
+    /**
+     * @brief Defer assessments to reach a specified level of motivation.
+     *
+     * Defers the player's completed assessments, starting from
+     * those with the lowest motivational
+     * cost, to increase the player's motivation to the specified target.
+     *
+     * @param targetMotivation The motivation level that the player aims to reach by deferring
+     * assessments.
+     * @return true if the target motivation level is reached by deferring assessments, false if the
+     * target motivation cannot be reached due to running out of assessments to defer
+     * false if the target motivation level cannot be reached with just deferring assessments
+     */
+    bool DeferAssessmentsToGetMotivation(int targetMotivation);
+
+    /**
+     * @brief Re-complete a previously deferred assessment
+     *
+     * @param pAssessment The deferred assessment to be re-completed
+     */
+    void ResubmitDeferredAssessment();
+
+    /**
+     * @brief Get all the deferred assessments of the player
+     *
+     * @return A vector of the deferred assessments
+     */
+    std::vector<std::shared_ptr<CAssessment>> GetDeferredAssessments() const
+    {
+        return mDeferredAssessments;
+    }
+
+    /**
+     * @brief apply for MC, if the player is eligible
+     *
+     * in the current implementation, all players are eligible for MC, and will be accepted
+     *
+     * @return true if the player is eligible for MC, false otherwise
+     */
+    bool ApplyForMC();
 
     /**
      * @brief Overloaded output operator for CPlayer
@@ -98,13 +147,20 @@ public:
     void SetHasWon(bool hasWon) { mHasWon = hasWon; }
 
     /**
+     * @brief Set the has dropped out status of the player
+     *
+     * @param hasDroppedOut The new has dropped out status
+     */
+    void SetDroppedOut(bool hasDroppedOut) { mHasDroppedOut = hasDroppedOut; }
+
+    /**
      * @brief Add an assessment to the player's completed assessments
      *
      * @param pAssessment The assessment to be added
      */
     void AddAssessment(std::shared_ptr<CAssessment>& pAssessment)
     {
-        mAssessments.push_back(pAssessment);
+        mCompletedAssessments.push_back(pAssessment);
     }
 
     /**
@@ -127,6 +183,13 @@ public:
      * @return The motivation level of the player
      */
     int GetMotivation() const { return mMotivation; }
+
+    /**
+     * @brief Get the has dropped out status of the player
+     *
+     * @return The has dropped out status of the player
+     */
+    bool GetHasDroppedOut() const { return mHasDroppedOut; }
 
     /**
      * @brief Get the success level of the player
@@ -156,7 +219,7 @@ public:
      */
     std::vector<std::shared_ptr<CAssessment>> GetCompletedAssessments() const
     {
-        return mAssessments;
+        return mCompletedAssessments;
     }
 
     /**
@@ -166,4 +229,9 @@ public:
      * @return A vector of the completed assessments for the specified year
      */
     std::vector<std::shared_ptr<CAssessment>> GetCompletedAssessments(int year);
+
+    /**
+     * @brief handle deferred assessments at the end of each round
+     */
+    void HandleDeferredAssessments();
 };

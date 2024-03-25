@@ -36,6 +36,14 @@ void CGame::Play(const int rounds)
 
         for (auto& pPlayer : mPlayers)
         {
+            // make sure the player has not dropped out
+            if (pPlayer->GetHasDroppedOut())
+            {
+                cout << pPlayer->GetName() << " has dropped out and will not play this round."
+                     << endl;
+                continue;
+            }
+
             // Spin the spinner
             int spinResult = CSpinner::Spin();
 
@@ -108,6 +116,9 @@ void CGame::Play(const int rounds)
 
             // Get the player's current space to calculate the effect
             pPlayer->GetCurrentSpace()->PlayerLanded(pPlayer, mpBoard);
+
+            // hanlde deferred assessments, if any
+            pPlayer->HandleDeferredAssessments();
 
             cout << *pPlayer;
         }
