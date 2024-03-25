@@ -17,7 +17,7 @@ CPlayer::CPlayer(std::string name)
 
 CPlayer::~CPlayer()
 {
-    std::cout << "Destroying player: " << mName << std::endl;
+    // nothing to do
 }
 
 void CPlayer::SetCurrentSpace(std::shared_ptr<CSpace> pSpace)

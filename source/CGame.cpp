@@ -86,11 +86,8 @@ void CGame::Play(const int rounds)
                     // Check if the player has crossed year 3
                     if (pPlayer->GetYearOfStudy() > Constants::kMaxYears)
                     {
-                        cout << "Congratulations! " << pPlayer->GetName() << " has graduated!"
-                             << endl;
-
-                        cout << "Final stats: ";
-                        cout << *pPlayer;
+                        cout << "Congratulations to " << pPlayer->GetName()
+                             << " on their Graduation Day!" << endl;
 
                         // End the game
                         return;
@@ -112,4 +109,24 @@ void CGame::Play(const int rounds)
             cout << *pPlayer;
         }
     }
+}
+
+void CGame::End()
+{
+    // Print out the final scores of the players
+    cout << "Game Over" << endl;
+    cout << "============" << endl;
+
+    // Find the player with the highest success
+    shared_ptr<CPlayer> pWinner = mPlayers[0];
+
+    for (const auto& pPlayer : mPlayers)
+    {
+        if (pPlayer->GetSuccess() > pWinner->GetSuccess())
+        {
+            pWinner = pPlayer;
+        }
+    }
+
+    cout << pWinner->GetName() << " wins!" << endl;
 }

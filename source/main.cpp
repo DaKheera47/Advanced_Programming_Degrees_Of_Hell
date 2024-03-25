@@ -43,5 +43,7 @@ int main()
 
     pCurrentGame->Play(Constants::kTotalRounds);
 
+    pCurrentGame->End();
+
     return 0;
 }

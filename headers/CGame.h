@@ -37,4 +37,10 @@ public:
      * @param rounds The number of rounds to play
      */
     void Play(const int rounds);
+
+    /**
+     * @brief End the game
+     * prints out the final scores of the players, and declares the winner
+     */
+    void End();
 };
