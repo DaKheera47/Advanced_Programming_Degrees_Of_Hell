@@ -6,59 +6,61 @@
 void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
                                             std::unique_ptr<CBoard>& board)
 {
-    DEBUG_PRINT("Player " + player->GetName() + " has completed the " + mName
-                + " extra curricular activity.");
-
-    bool alreadyCompleted = false;
+    // Check if player has already completed the assessment
     for (const auto& weakPlayer : mCompletedBy)
     {
         auto sharedPlayer = weakPlayer.lock();
         if (sharedPlayer && sharedPlayer == player)
         {
-            alreadyCompleted = true;
-            break;
+            // message output
+            std::cout << player->GetName() << " has already completed " << mName << std::endl;
+            // Player has already completed this assessment, no further action is taken.
+            return;
         }
     }
-
-    if (alreadyCompleted)
-    {
-        DEBUG_PRINT("Player " + player->GetName() + " has already completed the " + mName
-                    + " extra curricular activity.");
-        return;
-    }
-
-    if (player->GetMotivation() < mMotivationCost)
-    {
-        DEBUG_PRINT("Player " + player->GetName()
-                    + " does not have enough motivation to complete the " + mName
-                    + " extra curricular activity.");
-        return;
-    }
-
+    // Calculate the final success and motivational cost, accounting for shared efforts if
+    // applicable
     int finalSuccess = mSuccess;
     int finalMotivationCost = mMotivationCost;
 
-    if (mCompletedBy.size() > 1)
+    if (mCompletedBy.size() >= 1)
     {
-        finalSuccess /= mCompletedBy.size();
-        finalMotivationCost /= mCompletedBy.size();
+        finalSuccess /= (mCompletedBy.size() + 1);
+        finalMotivationCost /= (mCompletedBy.size() + 1);
     }
 
-    player->SetSuccess(player->GetSuccess() + finalSuccess);
+    // Verify if the player has enough motivation to do this extra curricular activity
+    if (player->GetMotivation() < finalMotivationCost)
+    {
+        std::cout << player->GetName() << " doesn't have the " << finalMotivationCost
+                  << " motivation to complete " << mName << std::endl;
+
+        // Insufficient motivation, player cannot attempt the assessment.
+        return;
+    }
+
     player->SetMotivation(player->GetMotivation() - finalMotivationCost);
+    player->SetSuccess(player->GetSuccess() + finalSuccess);
 
     std::cout << player->GetName() << " undertakes " << mName << " extra curricular activity for "
               << finalMotivationCost << " and achieves " << finalSuccess << std::endl;
 
-    if (mCompletedBy.size() > 1)
+    if (mCompletedBy.size() >= 1)
     {
         for (auto& helper : mCompletedBy)
         {
             auto lockedHelper = helper.lock();
             if (lockedHelper && lockedHelper != player)
             {
-                std::cout << "\t..." << lockedHelper->GetName() << " helps and achieves "
-                          << finalSuccess << std::endl;
+                // output message
+                std::cout << "\t" << lockedHelper->GetName() << " motivates " << player->GetName()
+                          << " by " << finalMotivationCost << " by joining their activity"
+                          << std::endl;
+                std::cout << "\t" << lockedHelper->GetName() << " also achieves " << finalSuccess
+                          << std::endl;
+
+                // increase the motivation of the helper
+                lockedHelper->SetMotivation(lockedHelper->GetMotivation() + finalMotivationCost);
                 lockedHelper->SetSuccess(lockedHelper->GetSuccess() + finalSuccess);
             }
         }
