@@ -1,0 +1,184 @@
+```mermaid
+
+classDiagram
+  CPlayer --|> CAssessment : "can complete"
+  CGame *-- CPlayer : "has"
+  CGame *-- CBoard : "uses"
+  CBoard *-- CSpace : "contains"
+  CSpace <|-- CAssessment : "is a"
+  CSpace <|-- CExtraCurricularActivity : "is a"
+  CSpace <|-- CPlagiarismHearing : "is a"
+  CSpace <|-- CBogus : "is a"
+  CSpace <|-- CBonus : "is a"
+  CSpace <|-- CAccusedOfPlagiarism : "is a"
+  CSpace <|-- CWelcomeWeek : "is a"
+  CSpace <|-- CSkipClasses : "is a"
+  CAssessment *-- CPlayer : "is completed by"
+  CExtraCurricularActivity --|> CAssessment : "extends"
+  CSpinner ..> CGame : "used by"
+  Constants ..> CGame : "used by"
+  FSpace --> CSpace : "creates"
+  CUtils ..> CSpace : "used by"
+  CUtils ..> CPlayer : "used by"
+  CUtils ..> CGame : "used by"
+
+  class CSpace {
+    <<abstract>>
+    -ESpaceType mType
+    -std::string mName
+    -int mMotivationCost
+    -int mSuccess
+    -int mYear
+    +CSpace(ESpaceType type)
+    +CSpace(const std::string& name, ESpaceType type, int motivationCost, int success, int year)
+    +virtual ~CSpace()
+    +virtual void PlayerLanded(std::shared_ptr<CPlayer>& pPlayer, std::unique_ptr<CBoard>& pBoard) = 0
+    +ESpaceType GetType() const
+    +const std::string& GetName() const
+    +int GetMotivationCost() const
+    +int GetSuccess() const
+    +int GetYear() const
+    +void SetType(ESpaceType type)
+    +void SetName(const std::string& name)
+    +void SetMotivationCost(int motivationCost)
+    +void SetSuccess(int success)
+    +void SetYear(int year)
+  }
+
+  class CSpinner {
+    -static int spinIdx
+    +static int Spin()
+  }
+
+  class Constants {
+        +static const int kTotalRounds
+    +static const int kWwMotivInc
+    +static const int kAssessmentsPerYear
+    +static const int kMaxYears
+    +static const int kRandomMode
+    +static const std::string kRandFilePath
+    +static const int kPlagiarismMotivDec
+  }
+
+    class CGame {
+    -CPlayerVector mPlayers
+    -std::unique_ptr~CBoard~ mpBoard
+    +CGame(CPlayerVector& players, std::unique_ptr~CBoard~& pBoard)
+    +void Start()
+    +void Play(const int rounds)
+    +void End()
+  }
+
+    class CUtils {
+    +static std::vector~std::string~ ReadFileLines(const std::string& filePath)
+    +static std::vector~std::string~ Split(const std::string& s, char delimiter)
+    +static std::string Strip(std::string& str)
+    +static void Replace(std::string& str, const std::string& from, const std::string& to)
+    +static int CharToInt(const char& c)
+    +static int StrToInt(const std::string& str)
+    +static int RandInt()
+    +static int RandInt(int end)
+    +static int RandInt(int start, int end)
+    +template <typename T> static bool PresentInVector(const std::vector~T~& vec, const T& item)
+    +static int GetSpaceIndex(const std::vector~std::shared_ptr~CSpace~~& spaces, std::shared_ptr~CSpace~& pCurrentSpace)
+    +static bool compareAssessments(const std::shared_ptr~CAssessment~& a, const std::shared_ptr~CAssessment~& b)
+  }
+
+    class CBoard {
+    -std::vector~std::shared_ptr~CSpace~~ mSpaces
+    +CBoard(const std::string& filename)
+    +~CBoard()
+    +std::vector~std::shared_ptr~CSpace~~ GetSpaces() const
+    +std::vector~std::shared_ptr~CSpace~~ GetSpaces(ESpaceType type) const
+  }
+
+    class FSpace {
+    +std::shared_ptr~CSpace~ CreateNewSpace(ESpaceType incomingSpace)
+  }
+
+
+  class CPlayer {
+    -std::string mName
+    -int mMotivation
+    -int mSuccess
+    -int mYearOfStudy
+    -std::shared_ptr~CSpace~ mpCurrentSpace
+    -std::vector~std::shared_ptr~CAssessment~~ mCompletedAssessments
+    -std::vector~std::shared_ptr~CAssessment~~ mDeferredAssessments
+    -bool mHasWon
+    -bool mHasDroppedOut
+    +CPlayer(std::string name, int motivation, int success, int yearOfStudy)
+    +CPlayer(std::string name)
+    +~CPlayer()
+    +void DeferAssessment(std::shared_ptr~CAssessment~& pAssessment)
+    +bool DeferAssessmentsToGetMotivation(int targetMotivation)
+    +void ResubmitDeferredAssessment()
+    +std::vector~std::shared_ptr~CAssessment~~ GetDeferredAssessments() const
+    +bool ApplyForMC()
+    +void SetMotivation(int motivation)
+    +void SetCurrentSpace(std::shared_ptr~CSpace~ pSpace)
+    +void SetName(const std::string& name)
+    +void SetSuccess(int success)
+    +void SetYearOfStudy(int yearOfStudy)
+    +void SetHasWon(bool hasWon)
+    +void SetDroppedOut(bool hasDroppedOut)
+    +void AddAssessment(std::shared_ptr~CAssessment~& pAssessment)
+    +std::shared_ptr~CSpace~ GetCurrentSpace()
+    +std::string GetName() const
+    +int GetMotivation() const
+    +bool GetHasDroppedOut() const
+    +int GetSuccess() const
+    +int GetYearOfStudy() const
+    +bool GetHasWon() const
+    +std::vector~std::shared_ptr~CAssessment~~ GetCompletedAssessments() const
+    +std::vector~std::shared_ptr~CAssessment~~ GetCompletedAssessments(int year)
+    +void HandleDeferredAssessments()
+  }
+
+  class CAssessment {
+    -std::vector<std::weak_ptr<CPlayer>> mCompletedBy
+    +CAssessment(ESpaceType type)
+    +~CAssessment()
+    +std::vector<std::weak_ptr<CPlayer>> GetCompletedBy()
+    +void SetCompletedBy(std::vector<std::weak_ptr<CPlayer>> completedBy)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CExtraCurricularActivity {
+    +CExtraCurricularActivity(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CPlagiarismHearing {
+    +CPlagiarismHearing(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CBogus {
+    -vector mChanceValues
+    +CBogus(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CBonus {
+    -vector mChanceValues
+    +CBonus(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CAccusedOfPlagiarism {
+    +CAccusedOfPlagiarism(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CWelcomeWeek {
+    +CWelcomeWeek(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+  class CSkipClasses {
+    +CSkipClasses(ESpaceType type)
+    +void PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr<CBoard>& board) override
+  }
+
+```
