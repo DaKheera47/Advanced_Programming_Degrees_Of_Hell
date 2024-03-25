@@ -41,7 +41,25 @@ void CGame::Play(const int rounds)
             {
                 cout << pPlayer->GetName() << " has dropped out and will not play this round."
                      << endl;
+
+                // Skip the player
                 continue;
+            }
+
+            // make sure the numer of dropped out players is less than the total number of players
+            int droppedOutPlayers = 0;
+            for (const auto& pPlayer : mPlayers)
+            {
+                if (pPlayer->GetHasDroppedOut())
+                {
+                    droppedOutPlayers++;
+                }
+            }
+
+            if (droppedOutPlayers == mPlayers.size())
+            {
+                cout << "All players have dropped out. Game over." << endl;
+                return;
             }
 
             // Spin the spinner
