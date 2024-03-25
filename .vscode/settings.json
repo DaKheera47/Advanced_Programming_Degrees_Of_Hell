@@ -58,7 +58,9 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "__availability": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "__tree": "cpp",
+        "set": "cpp"
     },
     "cmake.configureOnOpen": true,
     "C_Cpp.errorSquiggles": "enabled"

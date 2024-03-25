@@ -2,6 +2,14 @@
 
 #include <string>
 
+// Forward declarations
+class CPlayer;
+class CAssessment;
+
+using CPlayerVector = std::vector<std::shared_ptr<CPlayer>>;
+using CAssessmentVector = std::vector<std::shared_ptr<CAssessment>>;
+using CPlayerWeakPtrVector = std::vector<std::weak_ptr<CPlayer>>;
+
 class Constants
 {
 public:
@@ -45,4 +53,34 @@ public:
      * how much the motivation decreases when a player is accused of plagiarism
      */
     static const int kPlagiarismMotivDec = 50;
+
+    /**
+     * @brief
+     * starting motivation level of a player
+     */
+    static const int kStartingMotivation = 1000;
+
+    /**
+     * @brief
+     * starting success level of a player
+     */
+    static const int kStartingSuccess = 0;
+
+    /**
+     * @brief
+     * starting year of a player
+     */
+    static const int kStartingYear = 1;
+
+    /**
+     * @brief
+     * extra-curricular activity success level
+     */
+    static const int kExtraCurricularSuccess = 20;
+
+    /**
+     * @brief
+     * extra-curricular activity motivation cost
+     */
+    static const int kExtraCurricularMotivationCost = 100;
 };

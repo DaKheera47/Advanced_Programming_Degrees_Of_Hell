@@ -18,6 +18,7 @@ void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
             return;
         }
     }
+
     // Calculate the final success and motivational cost, accounting for shared efforts if
     // applicable
     int finalSuccess = mSuccess;
@@ -25,7 +26,9 @@ void CExtraCurricularActivity::PlayerLanded(std::shared_ptr<CPlayer>& player,
 
     if (mCompletedBy.size() >= 1)
     {
+        // final success is divided between all helpers, excluding the player themselves
         finalSuccess /= (mCompletedBy.size() + 1);
+        // motivation cost is always halved if there are helpers
         finalMotivationCost /= 2;
     }
 

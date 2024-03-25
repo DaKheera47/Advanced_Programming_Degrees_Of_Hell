@@ -7,9 +7,7 @@
 #include "CPlayer.h"
 #include "CSpace.h"
 #include "CSpinner.h"
-
-using CPlayerVector = std::vector<std::shared_ptr<CPlayer>>;
-using CSpaceVector = std::vector<std::unique_ptr<CSpace>>;
+#include "Constants.h"
 
 class CGame
 {

@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+// type values from the assignment brief
 enum class ESpaceType : unsigned int
 {
     ASSESSMENT = 1,

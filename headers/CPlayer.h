@@ -6,6 +6,7 @@
 
 #include "./spaces/CAssessment.h"
 #include "CSpace.h"
+#include "Constants.h"
 
 class CAssessment;
 
@@ -13,13 +14,13 @@ class CPlayer
 {
 private:
     std::string mName;
-    int mMotivation = 1000;
-    int mSuccess = 0;
-    int mYearOfStudy = 1;
+    int mMotivation = Constants::kStartingMotivation;
+    int mSuccess = Constants::kStartingSuccess;
+    int mYearOfStudy = Constants::kStartingYear;
 
     std::shared_ptr<CSpace> mpCurrentSpace;
-    std::vector<std::shared_ptr<CAssessment>> mCompletedAssessments;
-    std::vector<std::shared_ptr<CAssessment>> mDeferredAssessments;
+    CAssessmentVector mCompletedAssessments;
+    CAssessmentVector mDeferredAssessments;
 
     bool mHasWon = false;
     bool mHasDroppedOut = false;
@@ -81,10 +82,7 @@ public:
      *
      * @return A vector of the deferred assessments
      */
-    std::vector<std::shared_ptr<CAssessment>> GetDeferredAssessments() const
-    {
-        return mDeferredAssessments;
-    }
+    CAssessmentVector GetDeferredAssessments() const { return mDeferredAssessments; }
 
     /**
      * @brief apply for MC, if the player is eligible
@@ -217,10 +215,7 @@ public:
      *
      * @return A vector of the completed assessments
      */
-    std::vector<std::shared_ptr<CAssessment>> GetCompletedAssessments() const
-    {
-        return mCompletedAssessments;
-    }
+    CAssessmentVector GetCompletedAssessments() const { return mCompletedAssessments; }
 
     /**
      * @brief Get the completed assessments of the player for a specific year
@@ -228,7 +223,7 @@ public:
      * @param year The year of study
      * @return A vector of the completed assessments for the specified year
      */
-    std::vector<std::shared_ptr<CAssessment>> GetCompletedAssessments(int year);
+    CAssessmentVector GetCompletedAssessments(int year);
 
     /**
      * @brief handle deferred assessments at the end of each round

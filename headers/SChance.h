@@ -18,5 +18,6 @@ struct SChance
     SChance(int result, const std::string& msg, int val)
         : spinResult(result), message(msg), value(val)
     {
+        // intentionally empty, no additional setup required
     }
 };

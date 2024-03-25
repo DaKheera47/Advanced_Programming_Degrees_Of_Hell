@@ -6,14 +6,15 @@
 
 #include "../CPlayer.h"
 #include "./CAssessment.h"
+#include "./Constants.h"
 
 class CExtraCurricularActivity : public CAssessment
 {
 public:
     CExtraCurricularActivity(ESpaceType type) : CAssessment(type)
     {
-        mSuccess = 20;
-        mMotivationCost = 100;
+        mSuccess = Constants::kExtraCurricularSuccess;
+        mMotivationCost = Constants::kExtraCurricularMotivationCost;
     };
 
     /**

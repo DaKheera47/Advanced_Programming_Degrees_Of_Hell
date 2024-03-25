@@ -54,9 +54,9 @@ std::ostream& operator<<(std::ostream& os, const CPlayer& player)
     return os;
 }
 
-std::vector<std::shared_ptr<CAssessment>> CPlayer::GetCompletedAssessments(int year)
+CAssessmentVector CPlayer::GetCompletedAssessments(int year)
 {
-    std::vector<std::shared_ptr<CAssessment>> assessmentsForYear;
+    CAssessmentVector assessmentsForYear;
 
     for (const auto& pAssessment : mCompletedAssessments)
     {

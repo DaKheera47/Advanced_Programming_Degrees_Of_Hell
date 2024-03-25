@@ -6,14 +6,8 @@
 void CAccusedOfPlagiarism::PlayerLanded(std::shared_ptr<CPlayer>& player,
                                         std::unique_ptr<CBoard>& board)
 {
-    // player moves to the Plagiarism Hearing space
-    for (auto& space : board->GetSpaces())
-    {
-        if (space->GetType() == ESpaceType::PLAGIARISM_HEARING)
-        {
-            player->SetCurrentSpace(space);
-        }
-    }
+    // player moves to the first Plagiarism Hearing space
+    player->SetCurrentSpace(board->GetSpaces(ESpaceType::PLAGIARISM_HEARING)[0]);
 
     // output message: '<Player> lands on Accused of Plagiarism and goes to the hearing'
     std::cout << player->GetName() << " lands on Accused of Plagiarism and goes to the hearing"

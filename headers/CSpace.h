@@ -4,7 +4,6 @@
 #include <memory>
 #include <string>
 
-// #include "CPlayer.h"
 #include "./enums/ESpaceType.h"
 
 // Forward declarations to avoid circular dependencies
@@ -134,6 +133,3 @@ public:
      */
     virtual void SetYear(int year) { mYear = year; }
 };
-
-using UniqSpaceVector = std::vector<std::unique_ptr<CSpace>>;
-using UniqSpace = std::unique_ptr<CSpace>;

@@ -20,6 +20,7 @@ CBogus::CBogus(ESpaceType type) : CSpace(type)
     {
         vector<string> row = CUtils::Split(line, ',');
 
+        // assuming the csv file is in the format "spinResult,message,value"
         int spinResult = CUtils::StrToInt(row[0]);
         string message = row[1];
         int value = CUtils::StrToInt(row[2]);
