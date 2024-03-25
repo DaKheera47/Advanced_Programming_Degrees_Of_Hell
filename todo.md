@@ -1,2 +1,0 @@
-- [ ] find things that are common for all CSpaces
-- [ ] Make sure all possible `const &` are const references
