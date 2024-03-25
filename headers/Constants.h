@@ -39,4 +39,10 @@ public:
      * give the full file path from ./
      */
     static const std::string kRandFilePath;
+
+    /**
+     * @brief
+     * how much the motivation decreases when a player is accused of plagiarism
+     */
+    static const int kPlagiarismMotivDec = 50;
 };
