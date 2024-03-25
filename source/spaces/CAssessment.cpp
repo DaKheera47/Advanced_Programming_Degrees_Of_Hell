@@ -22,14 +22,9 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
         if (sharedPlayer && sharedPlayer == player)
         {
             alreadyCompleted = true;
-            break;
+            // Player has already completed this assessment, no further action is taken.
+            return;
         }
-    }
-
-    if (alreadyCompleted)
-    {
-        // Player has already completed this assessment, no further action is taken.
-        return;
     }
 
     // Verify if the player has enough motivation to attempt this assessment
@@ -44,10 +39,10 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
     int finalSuccess = mSuccess;
     int finalMotivationCost = mMotivationCost;
 
-    if (mCompletedBy.size() > 1)
+    if (mCompletedBy.size() >= 1)
     {
-        finalSuccess /= mCompletedBy.size();
-        finalMotivationCost /= mCompletedBy.size();
+        finalSuccess /= (mCompletedBy.size() + 1);
+        finalMotivationCost /= (mCompletedBy.size() + 1);
     }
 
     // Apply the assessment's effects to the player
@@ -58,11 +53,12 @@ void CAssessment::PlayerLanded(std::shared_ptr<CPlayer>& player, std::unique_ptr
               << " and achieves " << finalSuccess << std::endl;
 
     // Acknowledge contributions from other players, if any
-    if (mCompletedBy.size() > 1)
+    if (mCompletedBy.size() >= 1)
     {
         for (auto& helper : mCompletedBy)
         {
             auto lockedHelper = helper.lock();
+
             if (lockedHelper && lockedHelper != player)
             {
                 std::cout << "\t..." << lockedHelper->GetName() << " helps and achieves "
